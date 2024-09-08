@@ -1,10 +1,5 @@
 import { gsap } from "gsap";
 
-// Function to select DOM elements with proper type annotation
-const select = (selector: string): HTMLElement | null => {
-  return document.querySelector(selector);
-};
-
 // Function to animate sections when they come into view
 const animateSections = () => {
   // Create a GSAP timeline for animations
