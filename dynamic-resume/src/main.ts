@@ -1,5 +1,4 @@
 // app.ts
-
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("resumeForm") as HTMLFormElement;
   const resumePreview = document.getElementById(
@@ -43,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  form.addEventListener("submit", (event: Event) => {
+  form.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const formData = new FormData(form);
@@ -57,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .split(",")
         .map((skill) => skill.trim()),
     };
-
     resumePreview.style.marginTop = "20px";
     resumePreview.style.padding = "10px";
     resumePreview.style.border = "1px solid #ddd";
@@ -66,8 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
     renderResume(data);
   });
 
-  function getEntries(type: string): Array<Record<string, string>> {
-    const entries: Array<Record<string, string>> = [];
+  function getEntries(type: string) {
+    const entries: any[] = [];
     const containers = document.querySelectorAll(`.${type}-entry`);
     containers.forEach((container: Element) => {
       const inputs = (container as HTMLElement).querySelectorAll(
@@ -82,9 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
           entries[index] = {};
         }
         //@ts-ignore
-        entries[index][name] = (
-          input as HTMLInputElement | HTMLTextAreaElement
-        ).value.trim();
+        entries[index][name] = //@ts-ignore
+          (input as HTMLInputElement | HTMLTextAreaElement).value.trim();
       });
     });
     console.log(`${type} Entries:`, entries); // Debugging log
@@ -93,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ); // Filter out empty entries
   }
 
-  function addEducationEntry(index: number): void {
+  function addEducationEntry(index: number) {
     educationEntries.insertAdjacentHTML(
       "beforeend",
       `
@@ -121,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function addWorkExperienceEntry(index: number): void {
+  function addWorkExperienceEntry(index: number) {
     workExperienceEntries.insertAdjacentHTML(
       "beforeend",
       `
@@ -199,14 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function renderResume(data: {
-    name: string;
-    email: string;
-    phone: string;
-    education: Array<Record<string, string>>;
-    workExperience: Array<Record<string, string>>;
-    skills: string[];
-  }): void {
+  function renderResume(data: any) {
     resumePreview.innerHTML = `
         <div class="resume-container">
             <header class="resume-header">
@@ -223,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   data.education.length > 0
                     ? data.education
                         .map(
-                          (edu) => `
+                          (edu: any) => `
                             <div class="education-entry">
                                 <p><strong>Degree:</strong> ${
                                   edu.degree || "Not provided"
@@ -247,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   data.workExperience.length > 0
                     ? data.workExperience
                         .map(
-                          (exp) => `
+                          (exp: any) => `
                             <div class="work-experience-entry">
                                 <p><strong>Job Title:</strong> ${
                                   exp.jobTitle || "Not provided"
@@ -268,20 +258,16 @@ document.addEventListener("DOMContentLoaded", () => {
                         `
                         )
                         .join("")
-                    : "<p>It seems you haven’t shared any work experience details. Please provide your work experience to complete this section.</p>"
+                    : "<p>It looks like you haven’t added any work experience. If you have, please provide the details here.</p>"
                 }
             </section>
             <section class="skills-section">
                 <h2>Skills</h2>
-                <ul>
-                    ${
-                      data.skills.length > 0
-                        ? data.skills
-                            .map((skill) => `<li>${skill}</li>`)
-                            .join("")
-                        : "<li>No skills provided</li>"
-                    }
-                </ul>
+                ${
+                  data.skills.length > 0
+                    ? `<p>${data.skills.join(", ")}</p>`
+                    : "<p>No skills provided. Adding skills can help highlight your strengths.</p>"
+                }
             </section>
         </div>
     `;
