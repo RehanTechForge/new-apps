@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", (event: Event) => {
     event.preventDefault();
 
     const formData = new FormData(form);
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderResume(data);
   });
 
-  function getEntries(type: string) {
+  function getEntries(type: string): any[] {
     const entries: any[] = [];
     const containers = document.querySelectorAll(`.${type}-entry`);
     containers.forEach((container: Element) => {
@@ -75,12 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
       inputs.forEach((input) => {
         const name = (input as HTMLInputElement).name.split(/(?<=\D)(?=\d)/)[0]; // Remove index from name
         const index = (input as HTMLInputElement).name.match(/\d+$/)?.[0] || "";
-        //@ts-ignore
         if (!entries[index]) {
-          //@ts-ignore
           entries[index] = {};
         }
-        //@ts-ignore
         entries[index][name] = (
           input as HTMLInputElement | HTMLTextAreaElement
         ).value.trim();
@@ -96,19 +93,19 @@ document.addEventListener("DOMContentLoaded", () => {
     educationEntries.insertAdjacentHTML(
       "beforeend",
       `
-            <div class="entry-container education-entry">
-                <label for="degree${index}">Degree:</label>
-                <input type="text" id="degree${index}" name="degree${index}">
-                
-                <label for="institution${index}">Institution:</label>
-                <input type="text" id="institution${index}" name="institution${index}">
-                
-                <label for="year${index}">Year of Graduation:</label>
-                <input type="text" id="year${index}" name="year${index}">
-                
-                <button type="button" class="remove-button">Remove</button>
-            </div>
-        `
+        <div class="entry-container education-entry">
+          <label for="degree${index}">Degree:</label>
+          <input type="text" id="degree${index}" name="degree${index}">
+          
+          <label for="institution${index}">Institution:</label>
+          <input type="text" id="institution${index}" name="institution${index}">
+          
+          <label for="year${index}">Year of Graduation:</label>
+          <input type="text" id="year${index}" name="year${index}">
+          
+          <button type="button" class="remove-button">Remove</button>
+        </div>
+      `
     );
 
     // Add event listener to the remove button
@@ -124,25 +121,25 @@ document.addEventListener("DOMContentLoaded", () => {
     workExperienceEntries.insertAdjacentHTML(
       "beforeend",
       `
-            <div class="entry-container workExperience-entry">
-                <label for="jobTitle${index}">Job Title:</label>
-                <input type="text" id="jobTitle${index}" name="jobTitle${index}">
-                
-                <label for="company${index}">Company:</label>
-                <input type="text" id="company${index}" name="company${index}">
-                
-                <label for="startDate${index}">Start Date:</label>
-                <input type="date" id="startDate${index}" name="startDate${index}">
-                
-                <label for="endDate${index}">End Date:</label>
-                <input type="date" id="endDate${index}" name="endDate${index}">
-                
-                <label for="responsibilities${index}">Responsibilities:</label>
-                <textarea id="responsibilities${index}" name="responsibilities${index}"></textarea>
-                
-                <button type="button" class="remove-button">Remove</button>
-            </div>
-        `
+        <div class="entry-container workExperience-entry">
+          <label for="jobTitle${index}">Job Title:</label>
+          <input type="text" id="jobTitle${index}" name="jobTitle${index}">
+          
+          <label for="company${index}">Company:</label>
+          <input type="text" id="company${index}" name="company${index}">
+          
+          <label for="startDate${index}">Start Date:</label>
+          <input type="date" id="startDate${index}" name="startDate${index}">
+          
+          <label for="endDate${index}">End Date:</label>
+          <input type="date" id="endDate${index}" name="endDate${index}">
+          
+          <label for="responsibilities${index}">Responsibilities:</label>
+          <textarea id="responsibilities${index}" name="responsibilities${index}"></textarea>
+          
+          <button type="button" class="remove-button">Remove</button>
+        </div>
+      `
     );
 
     // Add event listener to the remove button
@@ -169,7 +166,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from(entries).every((entry: Element) => {
       const inputs = (entry as HTMLElement).querySelectorAll("input, textarea");
       return Array.from(inputs).every(
-        //@ts-ignore
         (input: HTMLInputElement | HTMLTextAreaElement) =>
           input.value.trim() !== ""
       );
@@ -191,7 +187,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from(entries).some((entry: Element) => {
       const inputs = (entry as HTMLElement).querySelectorAll("input, textarea");
       return Array.from(inputs).some(
-        //@ts-ignore
         (input: HTMLInputElement | HTMLTextAreaElement) =>
           input.value.trim() === ""
       );
@@ -200,151 +195,83 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderResume(data: any) {
     resumePreview.innerHTML = `
-    <div class="resume-container">
-      <h1 class="resume-title">Resume</h1>
-      <div class="resume-section personal-info">
-        <h2 class="section-heading">Personal Information</h2>
-        <p><strong>Name:</strong> <span contenteditable="true" data-field="name">${
-          data.name || "Not provided"
-        }</span></p>
-        <p><strong>Email:</strong> <span contenteditable="true" data-field="email">${
-          data.email || "Not provided"
-        }</span></p>
-        <p><strong>Phone:</strong> <span contenteditable="true" data-field="phone">${
-          data.phone || "Not provided"
-        }</span></p>
-      </div>
-      <div class="resume-section education">
-        <h2 class="section-heading">Education</h2>
-        ${
-          data.education.length > 0
-            ? data.education
-                .map(
-                  (edu: any, index: number) => `
-                  <div class="resume-entry editable-section" data-type="education" data-index="${index}">
-                    <p><strong>Degree:</strong> <span contenteditable="true" data-field="degree">${
-                      edu.degree || "Not provided"
-                    }</span></p>
-                    <p><strong>Institution:</strong> <span contenteditable="true" data-field="institution">${
-                      edu.institution || "Not provided"
-                    }</span></p>
-                    <p><strong>Year of Graduation:</strong> <span contenteditable="true" data-field="year">${
-                      edu.year || "Not provided"
-                    }</span></p>
-                  </div>
-                `
-                )
-                .join("")
-            : "<p class='no-data'>No education details provided. Click here to add some.</p>"
-        }
-      </div>
-      <div class="resume-section work-experience">
-        <h2 class="section-heading">Work Experience</h2>
-        ${
-          data.workExperience.length > 0
-            ? data.workExperience
-                .map(
-                  (exp: any, index: number) => `
-                  <div class="resume-entry editable-section" data-type="workExperience" data-index="${index}">
-                    <p><strong>Job Title:</strong> <span contenteditable="true" data-field="jobTitle">${
-                      exp.jobTitle || "Not provided"
-                    }</span></p>
-                    <p><strong>Company:</strong> <span contenteditable="true" data-field="company">${
-                      exp.company || "Not provided"
-                    }</span></p>
-                    <p><strong>Start Date:</strong> <span contenteditable="true" data-field="startDate">${
-                      exp.startDate || "Not provided"
-                    }</span></p>
-                    <p><strong>End Date:</strong> <span contenteditable="true" data-field="endDate">${
-                      exp.endDate || "Not provided"
-                    }</span></p>
-                    <p><strong>Responsibilities:</strong> <span contenteditable="true" data-field="responsibilities">${
-                      exp.responsibilities || "Not provided"
-                    }</span></p>
-                  </div>
-                `
-                )
-                .join("")
-            : "<p class='no-data'>No work experience provided. Click here to add some.</p>"
-        }
-      </div>
-      <div class="resume-section skills">
-        <h2 class="section-heading">Skills</h2>
-        <p><span contenteditable="true" data-field="skills">${
-          data.skills.length > 0 ? data.skills.join(", ") : "No skills provided"
-        }</span></p>
-      </div>
-    </div>
-  `;
-
-    // Add event listeners for editable fields
-    document
-      .querySelectorAll("[contenteditable]")
-      .forEach((element: HTMLElement) => {
-        element.addEventListener("blur", (event) => {
-          const target = event.target as HTMLElement;
-          const field = target.getAttribute("data-field");
-          const type =
-            target.closest(".editable-section")?.getAttribute("data-type") ||
-            "";
-          const index =
-            target.closest(".editable-section")?.getAttribute("data-index") ||
-            "";
-          const value = target.textContent?.trim() || "";
-
-          if (type && index) {
-            // Update the corresponding entry
-            updateEntry(type, index, field, value);
-          } else {
-            // Update general fields
-            updateGeneralField(field, value);
+      <div class="resume-container">
+        <h1 class="resume-title">Resume</h1>
+        <div class="resume-section personal-info">
+          <h2 class="section-heading">Personal Information</h2>
+          <p><strong>Name:</strong> <span contenteditable="true" data-field="name">${
+            data.name || "Not provided"
+          }</span></p>
+          <p><strong>Email:</strong> <span contenteditable="true" data-field="email">${
+            data.email || "Not provided"
+          }</span></p>
+          <p><strong>Phone:</strong> <span contenteditable="true" data-field="phone">${
+            data.phone || "Not provided"
+          }</span></p>
+        </div>
+        <div class="resume-section education">
+          <h2 class="section-heading">Education</h2>
+          ${
+            data.education.length > 0
+              ? data.education
+                  .map(
+                    (edu: any, index: number) => `
+                <div class="resume-entry editable-section" data-type="education" data-index="${index}">
+                  <p><strong>Degree:</strong> <span contenteditable="true" data-field="degree">${
+                    edu.degree || "Not provided"
+                  }</span></p>
+                  <p><strong>Institution:</strong> <span contenteditable="true" data-field="institution">${
+                    edu.institution || "Not provided"
+                  }</span></p>
+                  <p><strong>Year of Graduation:</strong> <span contenteditable="true" data-field="year">${
+                    edu.year || "Not provided"
+                  }</span></p>
+                </div>
+              `
+                  )
+                  .join("")
+              : "<p class='no-data'>No education details provided. Click here to add some.</p>"
           }
-        });
-      });
-  }
-
-  function updateEntry(
-    type: string,
-    index: string,
-    field: string | null,
-    value: string
-  ) {
-    // Locate the appropriate section and update the field
-    if (type === "education") {
-      const entry = educationEntries.querySelector(
-        `.education-entry:nth-child(${+index + 1})`
-      ) as HTMLElement;
-      if (entry) {
-        const input = entry.querySelector(
-          `[name=${field}${index}]`
-        ) as HTMLInputElement;
-        if (input) {
-          input.value = value;
-        }
-      }
-    } else if (type === "workExperience") {
-      const entry = workExperienceEntries.querySelector(
-        `.workExperience-entry:nth-child(${+index + 1})`
-      ) as HTMLElement;
-      if (entry) {
-        const input = entry.querySelector(`[name=${field}${index}]`) as
-          | HTMLInputElement
-          | HTMLTextAreaElement;
-        if (input) {
-          input.value = value;
-        }
-      }
-    }
-  }
-
-  function updateGeneralField(field: string | null, value: string) {
-    if (field) {
-      const input = form.querySelector(`[name=${field}]`) as
-        | HTMLInputElement
-        | HTMLTextAreaElement;
-      if (input) {
-        input.value = value;
-      }
-    }
+        </div>
+        <div class="resume-section work-experience">
+          <h2 class="section-heading">Work Experience</h2>
+          ${
+            data.workExperience.length > 0
+              ? data.workExperience
+                  .map(
+                    (exp: any, index: number) => `
+                <div class="resume-entry editable-section" data-type="workExperience" data-index="${index}">
+                  <p><strong>Job Title:</strong> <span contenteditable="true" data-field="jobTitle">${
+                    exp.jobTitle || "Not provided"
+                  }</span></p>
+                  <p><strong>Company:</strong> <span contenteditable="true" data-field="company">${
+                    exp.company || "Not provided"
+                  }</span></p>
+                  <p><strong>Start Date:</strong> <span contenteditable="true" data-field="startDate">${
+                    exp.startDate || "Not provided"
+                  }</span></p>
+                  <p><strong>End Date:</strong> <span contenteditable="true" data-field="endDate">${
+                    exp.endDate || "Not provided"
+                  }</span></p>
+                  <p><strong>Responsibilities:</strong> <span contenteditable="true" data-field="responsibilities">${
+                    exp.responsibilities || "Not provided"
+                  }</span></p>
+                </div>
+              `
+                  )
+                  .join("")
+              : "<p class='no-data'>No work experience details provided. Click here to add some.</p>"
+          }
+        </div>
+        <div class="resume-section skills">
+          <h2 class="section-heading">Skills</h2>
+          <p><strong>Skills:</strong> ${
+            data.skills.length > 0
+              ? data.skills.join(", ")
+              : "No skills provided"
+          }</p>
+        </div>
+      </div>
+    `;
   }
 });
