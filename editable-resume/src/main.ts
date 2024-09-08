@@ -72,13 +72,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const inputs = (container as HTMLElement).querySelectorAll(
         "input, textarea"
       );
-      const entry: any = {};
       inputs.forEach((input) => {
         const name = (input as HTMLInputElement).name.split(/(?<=\D)(?=\d)/)[0]; // Remove index from name
         const index = (input as HTMLInputElement).name.match(/\d+$/)?.[0] || "";
+        //@ts-ignore
         if (!entries[index]) {
+          //@ts-ignore
           entries[index] = {};
         }
+        //@ts-ignore
         entries[index][name] = (
           input as HTMLInputElement | HTMLTextAreaElement
         ).value.trim();
@@ -167,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from(entries).every((entry: Element) => {
       const inputs = (entry as HTMLElement).querySelectorAll("input, textarea");
       return Array.from(inputs).every(
+        //@ts-ignore
         (input: HTMLInputElement | HTMLTextAreaElement) =>
           input.value.trim() !== ""
       );
@@ -188,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from(entries).some((entry: Element) => {
       const inputs = (entry as HTMLElement).querySelectorAll("input, textarea");
       return Array.from(inputs).some(
+        //@ts-ignore
         (input: HTMLInputElement | HTMLTextAreaElement) =>
           input.value.trim() === ""
       );
