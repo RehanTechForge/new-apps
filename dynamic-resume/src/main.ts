@@ -64,31 +64,29 @@ document.addEventListener("DOMContentLoaded", () => {
     renderResume(data);
   });
 
-  function getEntries(type: string) {
-    const entries: any[] = [];
-    const containers = document.querySelectorAll(`.${type}-entry`);
-    containers.forEach((container: Element) => {
-      const inputs = (container as HTMLElement).querySelectorAll(
-        "input, textarea"
-      );
-      inputs.forEach((input) => {
-        const name = (input as HTMLInputElement).name.split(/(?<=\D)(?=\d)/)[0]; // Remove index from name
-        const index = (input as HTMLInputElement).name.match(/\d+$/)?.[0] || "";
-        //@ts-ignore
-        if (!entries[index]) {
-          //@ts-ignore
-          entries[index] = {};
-        }
-        //@ts-ignore
-        entries[index][name] = //@ts-ignore
-          (input as HTMLInputElement | HTMLTextAreaElement).value.trim();
-      });
+function getEntries(type: string) {
+  const entries: any[] = [];
+  const containers = document.querySelectorAll(`.${type}-entry`);
+  containers.forEach((container: Element) => {
+    const inputs = (container as HTMLElement).querySelectorAll(
+      "input, textarea"
+    );
+    inputs.forEach((input) => {
+      const name = (input as HTMLInputElement).name.split(/(?<=\D)(?=\d)/)[0]; // Remove index from name
+      const index = (input as HTMLInputElement).name.match(/\d+$/)?.[0] || "";
+      if (!entries[index]) {
+        entries[index] = {};
+      }
+      entries[index][name] = (
+        input as HTMLInputElement | HTMLTextAreaElement
+      ).value.trim();
     });
-    console.log(`${type} Entries:`, entries); // Debugging log
-    return entries.filter((entry) =>
-      Object.values(entry).some((value) => value)
-    ); // Filter out empty entries
-  }
+  });
+  console.log(`${type} Entries:`, entries); // Debugging log
+  return entries.filter((entry) => Object.values(entry).some((value) => value)); // Filter out empty entries
+}
+
+
 
   function addEducationEntry(index: number) {
     educationEntries.insertAdjacentHTML(
