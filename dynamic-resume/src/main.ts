@@ -73,7 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const inputs = (container as HTMLElement).querySelectorAll(
         "input, textarea"
       );
-      const entry: Record<string, string> = {};
       inputs.forEach((input) => {
         const name = (input as HTMLInputElement).name.split(/(?<=\D)(?=\d)/)[0]; // Remove index from name
         const index = (input as HTMLInputElement).name.match(/\d+$/)?.[0] || "";
