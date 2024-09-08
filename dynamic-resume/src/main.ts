@@ -1,4 +1,5 @@
 // app.ts
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("resumeForm") as HTMLFormElement;
   const resumePreview = document.getElementById(
@@ -42,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", (event: Event) => {
     event.preventDefault();
 
     const formData = new FormData(form);
@@ -56,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .split(",")
         .map((skill) => skill.trim()),
     };
+
     resumePreview.style.marginTop = "20px";
     resumePreview.style.padding = "10px";
     resumePreview.style.border = "1px solid #ddd";
@@ -64,20 +66,23 @@ document.addEventListener("DOMContentLoaded", () => {
     renderResume(data);
   });
 
-  function getEntries(type: string) {
-    const entries: any[] = [];
+  function getEntries(type: string): Array<Record<string, string>> {
+    const entries: Array<Record<string, string>> = [];
     const containers = document.querySelectorAll(`.${type}-entry`);
     containers.forEach((container: Element) => {
       const inputs = (container as HTMLElement).querySelectorAll(
         "input, textarea"
       );
-      const entry: any = {};
+      const entry: Record<string, string> = {};
       inputs.forEach((input) => {
         const name = (input as HTMLInputElement).name.split(/(?<=\D)(?=\d)/)[0]; // Remove index from name
         const index = (input as HTMLInputElement).name.match(/\d+$/)?.[0] || "";
+        //@ts-ignore
         if (!entries[index]) {
+          //@ts-ignore
           entries[index] = {};
         }
+        //@ts-ignore
         entries[index][name] = (
           input as HTMLInputElement | HTMLTextAreaElement
         ).value.trim();
@@ -89,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ); // Filter out empty entries
   }
 
-  function addEducationEntry(index: number) {
+  function addEducationEntry(index: number): void {
     educationEntries.insertAdjacentHTML(
       "beforeend",
       `
@@ -117,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function addWorkExperienceEntry(index: number) {
+  function addWorkExperienceEntry(index: number): void {
     workExperienceEntries.insertAdjacentHTML(
       "beforeend",
       `
@@ -166,6 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from(entries).every((entry: Element) => {
       const inputs = (entry as HTMLElement).querySelectorAll("input, textarea");
       return Array.from(inputs).every(
+        //@ts-ignore
         (input: HTMLInputElement | HTMLTextAreaElement) =>
           input.value.trim() !== ""
       );
@@ -187,13 +193,21 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from(entries).some((entry: Element) => {
       const inputs = (entry as HTMLElement).querySelectorAll("input, textarea");
       return Array.from(inputs).some(
+        //@ts-ignore
         (input: HTMLInputElement | HTMLTextAreaElement) =>
           input.value.trim() === ""
       );
     });
   }
 
-  function renderResume(data: any) {
+  function renderResume(data: {
+    name: string;
+    email: string;
+    phone: string;
+    education: Array<Record<string, string>>;
+    workExperience: Array<Record<string, string>>;
+    skills: string[];
+  }): void {
     resumePreview.innerHTML = `
         <div class="resume-container">
             <header class="resume-header">
@@ -210,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   data.education.length > 0
                     ? data.education
                         .map(
-                          (edu: any) => `
+                          (edu) => `
                             <div class="education-entry">
                                 <p><strong>Degree:</strong> ${
                                   edu.degree || "Not provided"
@@ -234,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   data.workExperience.length > 0
                     ? data.workExperience
                         .map(
-                          (exp: any) => `
+                          (exp) => `
                             <div class="work-experience-entry">
                                 <p><strong>Job Title:</strong> ${
                                   exp.jobTitle || "Not provided"
@@ -255,16 +269,20 @@ document.addEventListener("DOMContentLoaded", () => {
                         `
                         )
                         .join("")
-                    : "<p>It looks like you haven’t added any work experience. If you have, please provide the details here.</p>"
+                    : "<p>It seems you haven’t shared any work experience details. Please provide your work experience to complete this section.</p>"
                 }
             </section>
             <section class="skills-section">
                 <h2>Skills</h2>
-                ${
-                  data.skills.length > 0
-                    ? `<p>${data.skills.join(", ")}</p>`
-                    : "<p>No skills provided. Adding skills can help highlight your strengths.</p>"
-                }
+                <ul>
+                    ${
+                      data.skills.length > 0
+                        ? data.skills
+                            .map((skill) => `<li>${skill}</li>`)
+                            .join("")
+                        : "<li>No skills provided</li>"
+                    }
+                </ul>
             </section>
         </div>
     `;
