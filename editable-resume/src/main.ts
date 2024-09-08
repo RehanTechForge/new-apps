@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .split(",")
         .map((skill) => skill.trim()),
     };
+
     resumePreview.style.marginTop = "20px";
     resumePreview.style.padding = "10px";
     resumePreview.style.border = "1px solid #ddd";
@@ -71,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const inputs = (container as HTMLElement).querySelectorAll(
         "input, textarea"
       );
+      const entry: any = {};
       inputs.forEach((input) => {
         const name = (input as HTMLInputElement).name.split(/(?<=\D)(?=\d)/)[0]; // Remove index from name
         const index = (input as HTMLInputElement).name.match(/\d+$/)?.[0] || "";
@@ -100,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <input type="text" id="institution${index}" name="institution${index}">
                 
                 <label for="year${index}">Year of Graduation:</label>
-                <input type="number" id="year${index}" name="year${index}">
+                <input type="text" id="year${index}" name="year${index}">
                 
                 <button type="button" class="remove-button">Remove</button>
             </div>
@@ -165,7 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from(entries).every((entry: Element) => {
       const inputs = (entry as HTMLElement).querySelectorAll("input, textarea");
       return Array.from(inputs).every(
-        //@ts-ignore
         (input: HTMLInputElement | HTMLTextAreaElement) =>
           input.value.trim() !== ""
       );
@@ -187,7 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from(entries).some((entry: Element) => {
       const inputs = (entry as HTMLElement).querySelectorAll("input, textarea");
       return Array.from(inputs).some(
-        //@ts-ignore
         (input: HTMLInputElement | HTMLTextAreaElement) =>
           input.value.trim() === ""
       );
@@ -196,78 +196,151 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderResume(data: any) {
     resumePreview.innerHTML = `
-        <div class="resume-container">
-            <header class="resume-header">
-                <h1>Resume</h1>
-                <p class="contact-info">
-                    <strong>Name:</strong> ${data.name || "Not provided"}<br>
-                    <strong>Email:</strong> ${data.email || "Not provided"}<br>
-                    <strong>Phone:</strong> ${data.phone || "Not provided"}
-                </p>
-            </header>
-            <section class="education-section">
-                <h2>Education</h2>
-                ${
-                  data.education.length > 0
-                    ? data.education
-                        .map(
-                          (edu: any) => `
-                            <div class="education-entry">
-                                <p><strong>Degree:</strong> ${
-                                  edu.degree || "Not provided"
-                                }</p>
-                                <p><strong>Institution:</strong> ${
-                                  edu.institution || "Not provided"
-                                }</p>
-                                <p><strong>Year of Graduation:</strong> ${
-                                  edu.year || "Not provided"
-                                }</p>
-                            </div>
-                        `
-                        )
-                        .join("")
-                    : "<p>It seems you haven’t shared any educational details. Please provide your educational background to complete this section.</p>"
-                }
-            </section>
-            <section class="work-experience-section">
-                <h2>Work Experience</h2>
-                ${
-                  data.workExperience.length > 0
-                    ? data.workExperience
-                        .map(
-                          (exp: any) => `
-                            <div class="work-experience-entry">
-                                <p><strong>Job Title:</strong> ${
-                                  exp.jobTitle || "Not provided"
-                                }</p>
-                                <p><strong>Company:</strong> ${
-                                  exp.company || "Not provided"
-                                }</p>
-                                <p><strong>Start Date:</strong> ${
-                                  exp.startDate || "Not provided"
-                                }</p>
-                                <p><strong>End Date:</strong> ${
-                                  exp.endDate || "Not provided"
-                                }</p>
-                                <p><strong>Responsibilities:</strong> ${
-                                  exp.responsibilities || "Not provided"
-                                }</p>
-                            </div>
-                        `
-                        )
-                        .join("")
-                    : "<p>It looks like you haven’t added any work experience. If you have, please provide the details here.</p>"
-                }
-            </section>
-            <section class="skills-section">
-                <h2>Skills</h2>
-                ${
-                  data.skills.length > 0
-                    ? `<p>${data.skills.join(", ")}</p>`
-                    : "<p>No skills provided. Adding skills can help highlight your strengths.</p>"
-                }
-            </section>
-        </div>
-    `;
+    <div class="resume-container">
+      <h1 class="resume-title">Resume</h1>
+      <div class="resume-section personal-info">
+        <h2 class="section-heading">Personal Information</h2>
+        <p><strong>Name:</strong> <span contenteditable="true" data-field="name">${
+          data.name || "Not provided"
+        }</span></p>
+        <p><strong>Email:</strong> <span contenteditable="true" data-field="email">${
+          data.email || "Not provided"
+        }</span></p>
+        <p><strong>Phone:</strong> <span contenteditable="true" data-field="phone">${
+          data.phone || "Not provided"
+        }</span></p>
+      </div>
+      <div class="resume-section education">
+        <h2 class="section-heading">Education</h2>
+        ${
+          data.education.length > 0
+            ? data.education
+                .map(
+                  (edu: any, index: number) => `
+                  <div class="resume-entry editable-section" data-type="education" data-index="${index}">
+                    <p><strong>Degree:</strong> <span contenteditable="true" data-field="degree">${
+                      edu.degree || "Not provided"
+                    }</span></p>
+                    <p><strong>Institution:</strong> <span contenteditable="true" data-field="institution">${
+                      edu.institution || "Not provided"
+                    }</span></p>
+                    <p><strong>Year of Graduation:</strong> <span contenteditable="true" data-field="year">${
+                      edu.year || "Not provided"
+                    }</span></p>
+                  </div>
+                `
+                )
+                .join("")
+            : "<p class='no-data'>No education details provided. Click here to add some.</p>"
+        }
+      </div>
+      <div class="resume-section work-experience">
+        <h2 class="section-heading">Work Experience</h2>
+        ${
+          data.workExperience.length > 0
+            ? data.workExperience
+                .map(
+                  (exp: any, index: number) => `
+                  <div class="resume-entry editable-section" data-type="workExperience" data-index="${index}">
+                    <p><strong>Job Title:</strong> <span contenteditable="true" data-field="jobTitle">${
+                      exp.jobTitle || "Not provided"
+                    }</span></p>
+                    <p><strong>Company:</strong> <span contenteditable="true" data-field="company">${
+                      exp.company || "Not provided"
+                    }</span></p>
+                    <p><strong>Start Date:</strong> <span contenteditable="true" data-field="startDate">${
+                      exp.startDate || "Not provided"
+                    }</span></p>
+                    <p><strong>End Date:</strong> <span contenteditable="true" data-field="endDate">${
+                      exp.endDate || "Not provided"
+                    }</span></p>
+                    <p><strong>Responsibilities:</strong> <span contenteditable="true" data-field="responsibilities">${
+                      exp.responsibilities || "Not provided"
+                    }</span></p>
+                  </div>
+                `
+                )
+                .join("")
+            : "<p class='no-data'>No work experience provided. Click here to add some.</p>"
+        }
+      </div>
+      <div class="resume-section skills">
+        <h2 class="section-heading">Skills</h2>
+        <p><span contenteditable="true" data-field="skills">${
+          data.skills.length > 0 ? data.skills.join(", ") : "No skills provided"
+        }</span></p>
+      </div>
+    </div>
+  `;
+
+    // Add event listeners for editable fields
+    document
+      .querySelectorAll("[contenteditable]")
+      .forEach((element: HTMLElement) => {
+        element.addEventListener("blur", (event) => {
+          const target = event.target as HTMLElement;
+          const field = target.getAttribute("data-field");
+          const type =
+            target.closest(".editable-section")?.getAttribute("data-type") ||
+            "";
+          const index =
+            target.closest(".editable-section")?.getAttribute("data-index") ||
+            "";
+          const value = target.textContent?.trim() || "";
+
+          if (type && index) {
+            // Update the corresponding entry
+            updateEntry(type, index, field, value);
+          } else {
+            // Update general fields
+            updateGeneralField(field, value);
+          }
+        });
+      });
+  }
+
+  function updateEntry(
+    type: string,
+    index: string,
+    field: string | null,
+    value: string
+  ) {
+    // Locate the appropriate section and update the field
+    if (type === "education") {
+      const entry = educationEntries.querySelector(
+        `.education-entry:nth-child(${+index + 1})`
+      ) as HTMLElement;
+      if (entry) {
+        const input = entry.querySelector(
+          `[name=${field}${index}]`
+        ) as HTMLInputElement;
+        if (input) {
+          input.value = value;
+        }
+      }
+    } else if (type === "workExperience") {
+      const entry = workExperienceEntries.querySelector(
+        `.workExperience-entry:nth-child(${+index + 1})`
+      ) as HTMLElement;
+      if (entry) {
+        const input = entry.querySelector(`[name=${field}${index}]`) as
+          | HTMLInputElement
+          | HTMLTextAreaElement;
+        if (input) {
+          input.value = value;
+        }
+      }
+    }
+  }
+
+  function updateGeneralField(field: string | null, value: string) {
+    if (field) {
+      const input = form.querySelector(`[name=${field}]`) as
+        | HTMLInputElement
+        | HTMLTextAreaElement;
+      if (input) {
+        input.value = value;
+      }
+    }
   }
 });
