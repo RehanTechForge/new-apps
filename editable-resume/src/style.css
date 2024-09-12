@@ -1,55 +1,193 @@
-body {
-  font-family: Arial, sans-serif;
+/* style.css */
+* {
+  box-sizing: border-box;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  font-family: "Arial", sans-serif;
 }
 
-form {
+body {
+  background-color: #f4f4f4;
+  color: #333;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1000px;
+  width: 100%;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
   margin-bottom: 20px;
 }
 
-div {
-  margin-bottom: 10px;
+h2 {
+  margin-top: 20px;
+  color: #555;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.form-container {
+  margin-bottom: 20px;
 }
 
 label {
   display: block;
-  margin-bottom: 5px;
+  margin: 10px 0 5px;
+  color: #555;
 }
 
-input, textarea {
+input {
   width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
 }
 
-button {
-  padding: 10px 15px;
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+  background-color: #f9f9f9;
+}
+
+input:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: #fff;
+}
+
+.add-btn,
+.submit-btn {
+  display: block;
   background-color: #007bff;
   color: white;
+  padding: 10px 15px;
+  margin: 15px 0;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
+.add-btn:hover,
+.submit-btn:hover {
   background-color: #0056b3;
 }
 
-#resumePreview {
-  border: 1px solid #ddd;
+.resume-container {
+  margin-top: 30px;
   padding: 20px;
-  margin-top: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
-.editable {
-  border: 1px dashed #ccc;
-  padding: 5px;
+.resume-container:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.resume-output {
+  background-color: #fefefe;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 25px;
+  min-height: 250px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.resume-output:hover {
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.resume-output h3 {
+  font-size: 1.8rem;
+  color: #007bff;
+  margin-bottom: 15px;
+}
+
+.resume-output p {
   margin: 5px 0;
-  min-height: 20px;
-  cursor: text;
+  font-size: 1rem;
+  color: #555;
 }
 
-.editable:focus {
-  outline: none;
-  border-color: #007bff;
+.resume-section {
+  margin-top: 25px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.resume-section h4 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.resume-section ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.resume-section li {
+  padding: 10px;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.resume-section li:hover {
+  transform: translateY(-2px);
+  background-color: #f0f0f0;
+}
+
+.resume-section li .title {
+  font-weight: bold;
+  color: #007bff;
+  font-size: 1.2rem;
+}
+
+.resume-section li .school,
+.resume-section li .company {
+  color: #555;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+.resume-section li .years {
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 3px;
+}
+
+.resume-footer {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.9rem;
+  color: #999;
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+}
+
+.resume-footer p {
+  margin: 0;
 }
