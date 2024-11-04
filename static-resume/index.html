@@ -1,290 +1,420 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Sets the character encoding to UTF-8 for proper text rendering -->
     <meta charset="UTF-8" />
-    <!-- Ensures the website is responsive and adjusts to different screen sizes -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- The title of the webpage, shown in the browser tab -->
     <title>Responsive Resume</title>
-    <!-- Links the external stylesheet for styling the page -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1"
-    />
-    <div class="resume-wrapper">
-      <section class="profile section-padding">
-        <div class="container myCotainer">
-          <div class="picture-resume-wrapper">
-            <div class="picture-resume">
-              <span><img src="./image.jpeg" alt="" /></span>
-              <svg version="1.1" viewBox="0 0 350 350">
-                <defs>
-                  <filter id="goo">
-                    <feGaussianBlur
-                      in="SourceGraphic"
-                      stdDeviation="8"
-                      result="blur"
-                    />
-                    <feColorMatrix
-                      in="blur"
-                      mode="matrix"
-                      values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -9"
-                      result="cm"
-                    />
-                  </filter>
-                </defs>
-
-                <g filter="url(#goo)">
-                  <circle
-                    id="main_circle"
-                    class="st0"
-                    cx="171.5"
-                    cy="175.6"
-                    r="130"
-                  />
-
-                  <circle
-                    id="circle"
-                    class="bubble0 st1"
-                    cx="171.5"
-                    cy="175.6"
-                    r="122.7"
-                  />
-                  <circle
-                    id="circle"
-                    class="bubble1 st1"
-                    cx="171.5"
-                    cy="175.6"
-                    r="122.7"
-                  />
-                  <circle
-                    id="circle"
-                    class="bubble2 st1"
-                    cx="171.5"
-                    cy="175.6"
-                    r="122.7"
-                  />
-                  <circle
-                    id="circle"
-                    class="bubble3 st1"
-                    cx="171.5"
-                    cy="175.6"
-                    r="122.7"
-                  />
-                  <circle
-                    id="circle"
-                    class="bubble4 st1"
-                    cx="171.5"
-                    cy="175.6"
-                    r="122.7"
-                  />
-                  <circle
-                    id="circle"
-                    class="bubble5 st1"
-                    cx="171.5"
-                    cy="175.6"
-                    r="122.7"
-                  />
-                  <circle
-                    id="circle"
-                    class="bubble6 st1"
-                    cx="171.5"
-                    cy="175.6"
-                    r="122.7"
-                  />
-                  <circle
-                    id="circle"
-                    class="bubble7 st1"
-                    cx="171.5"
-                    cy="175.6"
-                    r="122.7"
-                  />
-                  <circle
-                    id="circle"
-                    class="bubble8 st1"
-                    cx="171.5"
-                    cy="175.6"
-                    r="122.7"
-                  />
-                  <circle
-                    id="circle"
-                    class="bubble9 st1"
-                    cx="171.5"
-                    cy="175.6"
-                    r="122.7"
-                  />
-                  <circle
-                    id="circle"
-                    class="bubble10 st1"
-                    cx="171.5"
-                    cy="175.6"
-                    r="122.7"
-                  />
-                </g>
-              </svg>
-            </div>
-            <div class="clearfix"></div>
-          </div>
-          <div class="name-wrapper new">
-            <h1>Muhammad Rehan</h1>
-            <!-- YOUR NAME AND LAST NAME  -->
-          </div>
-          <div class="clearfix"></div>
-          <div class="contact-info clearfix">
-            <ul class="list-titles">
-              <li>Call</li>
-              <li>Mail</li>
-              <li>Web</li>
-              <li>Home</li>
-            </ul>
-            <ul class="list-content">
-              <li>+31 8496 6323</li>
-              <!-- YOUR PHONE NUMBER  -->
-              <li>muhammadrehan125768@gmail.com</li>
-              <!-- YOUR EMAIL -->
-              <li>
-                <a href="https://github.com/RehanTechForge">Muhammad Rehan</a>
-              </li>
-              <!-- YOUR WEBSITE  -->
-              <li>House not 551 Sector 48/d Korangi no 2 Karachi</li>
-              <!-- YOUR STATE AND COUNTRY  -->
-            </ul>
-          </div>
-          <div class="contact-presentation">
-            <!-- YOUR PRESENTATION RESUME  -->
+    <main>
+      <section class="sideSection">
+        <div class="imgContainer">
+          <img src="/img.png" alt="hero image" />
+        </div>
+        <div class="introConainer">
+          <h2>Muhammad Rehan</h2>
+          <h4>FullStack Developer</h4>
+          <div>
             <p>
-              <span class="bold">Lorem</span> ipsum dolor sit amet, consectetur
-              adipiscing elit. Vivamus euismod congue nisi, nec consequat quam.
-              In consectetur faucibus turpis eget laoreet. Sed nec imperdiet
-              purus.
+              People ignore design <br />
+              that ignore people
             </p>
+            <span>Frank kimero</span>
           </div>
-          <div class="contact-social myContact clearfix">
-            <ul class="list-titles">
-              <li>Github</li>
-              <li>Linkedin</li>
-            </ul>
-            <ul class="list-content">
-              <!-- REMEMBER TO PUT THE URL ON THE HREF TAG  -->
-              <li>
-                <a href="https://github.com/RehanTechForge">Muhammad Rehan</a>
-              </li>
-              <!-- YOUR TWITTER USER  -->
-              <li>
-                <a href="https://www.linkedin.com/in/rehantechforge"
+        </div>
+        <div class="contactInfoContainer">
+          <div class="contactInfoContainerChild">
+            <span class="icon"><i class="fa-regular fa-envelope"></i></span>
+            <div>
+              <span class="contactName">Email</span>
+              <p>
+                <a href="mailto:muhammadrehan125768@gmail.com"
+                  >muhammadrehan125768@gmail.com</a
+                >
+              </p>
+            </div>
+          </div>
+          <div class="contactInfoContainerChild">
+            <span class="icon"><i class="fa-brands fa-github"></i></span>
+            <div>
+              <span class="contactName">Github</span>
+              <p>
+                <a href="https://github.com/rehanTechForge">Muhammad Rehan</a>
+              </p>
+            </div>
+          </div>
+          <div class="contactInfoContainerChild">
+            <span class="icon"><i class="fa-solid fa-phone"></i></span>
+            <div>
+              <span class="contactName">Pone</span>
+              <p>
+                <a href="tel:03184966323">03184966323</a>
+              </p>
+            </div>
+          </div>
+          <div class="contactInfoContainerChild">
+            <span class="icon"><i class="fa-solid fa-location-dot"></i></span>
+            <div>
+              <span class="contactName">Location</span>
+              <p>House No 551 Sector 48/D Karachi</p>
+            </div>
+          </div>
+        </div>
+        <div class="socialInfoContainer">
+          <p class="socialInfoText">socials</p>
+          <div class="socialInfoContainerChild">
+            <span class="icon linkedinColor"
+              ><i class="fa-brands fa-linkedin-in"></i
+            ></span>
+            <div>
+              <span class="contactName">Linkedin</span>
+              <p>
+                <a href="https://www.linkedin.com/in/rehantechforge/"
                   >Muhammad Rehan</a
                 >
-              </li>
-              <!-- YOUR BEHANCE USER  -->
-            </ul>
+              </p>
+            </div>
+          </div>
+          <div class="socialInfoContainerChild">
+            <span class="icon dribbleColor"
+              ><i class="fa-brands fa-dribbble"></i
+            ></span>
+            <div>
+              <span class="contactName">Dribble</span>
+              <p>
+                <a href="https://www.linkedin.com/in/rehantechforge/"
+                  >@Muhammad Rehan</a
+                >
+              </p>
+            </div>
+          </div>
+          <div class="socialInfoContainerChild">
+            <span class="icon instagramColor"
+              ><i class="fa-brands fa-instagram"></i
+            ></span>
+            <div>
+              <span class="contactName">Instagram</span>
+              <p>
+                <a href="https://www.linkedin.com/in/rehantechforge/"
+                  >@Muhammad Rehan</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="languageContainer">
+          <p class="socialInfoText">languages</p>
+          <div class="languageContainerChild">
+            <div>
+              <img src="./p.png" class="languageImage" />
+            </div>
+            <div>
+              <p>English</p>
+              <span class="contactName">Professional Working</span>
+            </div>
+          </div>
+          <div class="languageContainerChild">
+            <div>
+              <img src="./a.png" class="languageImage" />
+            </div>
+            <div>
+              <p>Urdu</p>
+              <span class="contactName">Professional Working</span>
+            </div>
+          </div>
+          <div class="languageContainerChild">
+            <div>
+              <img src="./i.png" class="languageImage" />
+            </div>
+            <div>
+              <p>Italian</p>
+              <span class="contactName">Native</span>
+            </div>
           </div>
         </div>
       </section>
-
-      <section class="experience section-padding">
-        <div class="container">
-          <h3 class="experience-title">Experience</h3>
-
-          <div class="experience-wrapper">
-            <div class="company-wrapper clearfix">
-              <div class="experience-title">Company name</div>
-              <!-- NAME OF THE COMPANY YOUWORK WITH  -->
-              <div class="time">Nov 2012 - Present</div>
-              <!-- THE TIME YOU WORK WITH THE COMPANY  -->
-            </div>
-
-            <div class="job-wrapper clearfix">
-              <div class="experience-title">Front End Developer</div>
-              <!-- JOB TITLE  -->
-              <div class="company-description">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                  a elit facilisis, adipiscing leo in, dignissim magna.
-                </p>
-                <!-- JOB DESCRIPTION  -->
+      <section class="mainSection">
+        <div class="experienceSection">
+          <h2>experience</h2>
+          <div class="experienceSectionContainerFirst firstChild">
+            <div class="experienceSectionContainerFirstChild">
+              <div>
+                <img src="./m.png" alt="" />
               </div>
             </div>
-
-            <div class="company-wrapper clearfix">
-              <div class="experience-title">Company name</div>
-              <!-- NAME OF THE COMPANY YOUWORK WITH  -->
-              <div class="time">Nov 2010 - Present</div>
-              <!-- THE TIME YOU WORK WITH THE COMPANY  -->
+            <div class="experienceSectionContainerSecondChild">
+              <p class="companyPost">VR Designer</p>
+              <p class="companyName">Meta</p>
             </div>
-
-            <div class="job-wrapper clearfix">
-              <div class="experience-title">
-                Freelance, Web Designer / Web Developer
-              </div>
-              <!-- JOB TITLE  -->
-              <div class="company-description">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                  a elit facilisis, adipiscing leo in, dignissim magna.
-                </p>
-                <!-- JOB DESCRIPTION  -->
-              </div>
-            </div>
-
-            <div class="company-wrapper clearfix">
-              <div class="experience-title">Company name</div>
-              <!-- NAME OF THE COMPANY YOUWORK WITH  -->
-              <div class="time">Nov 2009 - Nov 2010</div>
-              <!-- THE TIME YOU WORK WITH THE COMPANY  -->
-            </div>
-
-            <div class="job-wrapper clearfix">
-              <div class="experience-title">Web Designer</div>
-              <!-- JOB TITLE  -->
-              <div class="company-description">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                  a elit facilisis, adipiscing leo in, dignissim magna.
-                </p>
-                <!-- JOB DESCRIPTION  -->
+            <div class="experienceSectionContainerThirdChild">
+              <button>Present</button>
+              <div>
+                <span><i class="fa-solid fa-location-dot"></i></span>
+                <span>menlo park, california</span>
               </div>
             </div>
           </div>
-          <!--Skill experience-->
-
-          <div class="section-wrapper clearfix">
-            <h3 class="section-title">Skills</h3>
-            <!-- YOUR SET OF SKILLS  -->
-            <ul>
-              <li class="skill-percentage">HTML / HTML5</li>
-              <li class="skill-percentage">CSS / CSS3 / SASS / LESS</li>
-              <li class="skill-percentage">Javascript</li>
-              <li class="skill-percentage">Jquery</li>
-              <li class="skill-percentage">Wordpress</li>
-              <li class="skill-percentage">Photoshop</li>
-            </ul>
+          <div class="experienceSectionContainerSecond">
+            <div class="experienceSectionContainerFirstChild">
+              <div>
+                <img src="./al.png" alt="" />
+              </div>
+            </div>
+            <div class="experienceSectionContainerSecondChild">
+              <p class="companyPost">Product Designer</p>
+              <p class="companyName">Apple</p>
+            </div>
+            <div class="experienceSectionContainerThirdChild">
+              <p>jul 20-jan 2022</p>
+              <div>
+                <span><i class="fa-solid fa-location-dot"></i></span>
+                <span>cupertino, california</span>
+              </div>
+            </div>
           </div>
-
-          <div class="section-wrapper clearfix">
-            <h3 class="section-title">Hobbies</h3>
-            <!-- DESCRIPTION OF YOUR HOBBIES -->
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a
-              elit facilisis, adipiscing leo in, dignissim magna.
-            </p>
-
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a
-              elit facilisis, adipiscing leo in, dignissim magna.
-            </p>
+          <div class="experienceSectionContainerSecond">
+            <div class="experienceSectionContainerFirstChild">
+              <div class="teslaColor">
+                <img src="./t.png" alt="" />
+              </div>
+            </div>
+            <div class="experienceSectionContainerSecondChild">
+              <p class="companyPost">UX Designer</p>
+              <p class="companyName">Tesla</p>
+            </div>
+            <div class="experienceSectionContainerThirdChild">
+              <p>Oct 2015 - march 2020</p>
+              <div>
+                <span><i class="fa-solid fa-location-dot"></i></span>
+                <span>austin, texas</span>
+              </div>
+            </div>
+          </div>
+          <div class="experienceSectionContainerSecond">
+            <div class="experienceSectionContainerFirstChild">
+              <div class="googleColor">
+                <img src="./g.png" alt="" />
+              </div>
+            </div>
+            <div class="experienceSectionContainerSecondChild">
+              <p class="companyPost">System Design architect</p>
+              <p class="companyName">Tesla</p>
+            </div>
+            <div class="experienceSectionContainerThirdChild">
+              <p>sep 2014 - aug 2015</p>
+              <div>
+                <span><i class="fa-solid fa-location-dot"></i></span>
+                <span>mountain view, california</span>
+              </div>
+            </div>
+          </div>
+          <div class="experienceSectionContainerSecond">
+            <div class="experienceSectionContainerFirstChild">
+              <div class="vectorColor">
+                <img src="./v.png" alt="" />
+              </div>
+            </div>
+            <div class="experienceSectionContainerSecondChild">
+              <p class="companyPost">Senior Product Design</p>
+              <p class="companyName">Tesla</p>
+            </div>
+            <div class="experienceSectionContainerThirdChild">
+              <p>sep 201 - jul 2013</p>
+              <div>
+                <span><i class="fa-solid fa-location-dot"></i></span>
+                <span>berlin, germany</span>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="skillSection">
+          <h2>Skills</h2>
+          <div class="skillSectionMainContainer">
+            <div class="skillSectionMainContainerFirstChild">
+              <div class="mainContainerItemOne">
+                <span><i class="fa-solid fa-palette"></i></span>
+                <p>Design</p>
+              </div>
+              <div class="mainContainerItemTwo itemTwoBorderRounded">
+                <p class="borderLeft">Web Design</p>
+                <p>Mobile Design</p>
+              </div>
+              <div class="mainContainerItemTwo">
+                <p>User Experience</p>
+              </div>
+              <div class="mainContainerItemTwo itemThree">
+                <p>Wireframing</p>
+                <p>Prototyping</p>
+                <p>Testing</p>
+              </div>
+              <div class="mainContainerItemTwo itemFiveBorderRounded">
+                <p>Design System</p>
+              </div>
+            </div>
+            <div
+              class="skillSectionMainContainerFirstChild skillSectionMainContainerSecondChild"
+            >
+              <div class="mainContainerItemOne">
+                <span><i class="fa-solid fa-code"></i></span>
+                <p>Development</p>
+              </div>
+
+              <div class="mainContainerItemTwo itemTwoBorderRounded">
+                <p>React js</p>
+              </div>
+              <div class="mainContainerItemTwo itemThree">
+                <p>Wireframing</p>
+                <p>Prototyping</p>
+                <p>Testing</p>
+              </div>
+              <div class="mainContainerItemTwo">
+                <p class="borderLeft">Web Design</p>
+                <p>Mobile Design</p>
+              </div>
+              <div class="mainContainerItemTwo itemFiveBorderRounded">
+                <p>User Experience</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="educationSection">
+          <h2>education</h2>
+          <div class="certificates-section">
+            <div class="certificate-card">
+              <img
+                src="./c.png"
+                alt="Memorisely Logo"
+                class="certificate-icon"
+              />
+              <div class="certificate-content">
+                <h4>Memorisely</h4>
+                <h3>Build a design system</h3>
+                <p>Oct 2021</p>
+              </div>
+            </div>
+            <div class="certificate-card">
+              <img
+                src="./ui.png"
+                alt="UX Academy Logo"
+                class="certificate-icon"
+              />
+              <div class="certificate-content">
+                <h4>UX academy</h4>
+                <h3>UX Design certificate</h3>
+                <p>Feb 2020</p>
+              </div>
+            </div>
+            <div class="certificate-card">
+              <img src="./c.png" alt="Coursera Logo" class="certificate-icon" />
+              <div class="certificate-content">
+                <h4>Coursera</h4>
+                <h3>User research course</h3>
+                <p>Dec 2019</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="projectSection">
+          <h2>latest projects</h2>
+          <div class="projectSectionMainContainer">
+            <div class="projectSectionChild">
+              <div class="projectSectionFirstRow">
+                <div class="imageCont">
+                  <img src="./p1.png" alt="" />
+                </div>
+                <div class="ProjectSectionContent">
+                  <h3>Powerful design system</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Ullam,
+                  </p>
+                </div>
+              </div>
+              <div class="projectSectionSecondRow">
+                <span><i class="fa-brands fa-figma"></i></span>
+                <a href="https://figma.com">https://figma.com</a>
+              </div>
+            </div>
+            <div class="projectSectionChild">
+              <div class="projectSectionFirstRow">
+                <div class="imageCont">
+                  <img src="./p2.png" alt="" />
+                </div>
+                <div class="ProjectSectionContent">
+                  <h3>modern website</h3>
+                  <p>
+                    ducimus amet dolorem quas! Asperiores, aperiam iusto.
+                    Voluptatibus, doloribus beatae.
+                  </p>
+                </div>
+              </div>
+              <div class="projectSectionSecondRow">
+                <span><i class="fa-solid fa-link"></i></span>
+                <a href="https://figma.com">https://ui-8.net</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="toolSection">
+          <h2>tools</h2>
+          <div class="toolSectionMainContainer">
+            <div class="toolSectionChild">
+              <img src="./p1.png" alt="" />
+              <h3>Figma</h3>
+              <p>UI design Prototyping</p>
+            </div>
+            <div class="toolSectionChild">
+              <img src="./t2.png" alt="" />
+              <h3>Maze</h3>
+              <p>Product research</p>
+            </div>
+            <div class="toolSectionChild">
+              <img src="./t3.png" alt="" />
+              <h3>Spline</h3>
+              <p>3D design</p>
+            </div>
+            <div class="toolSectionChild">
+              <img src="./t4.png" alt="" />
+              <h3>Zeplin</h3>
+              <p>Design workspace</p>
+            </div>
+          </div>
+          <div class="toolSectionMainContainer hidden">
+            <div class="toolSectionChild">
+              <img src="./p1.png" alt="" />
+              <h3>Figma</h3>
+              <p>UI design Prototyping</p>
+            </div>
+            <div class="toolSectionChild">
+              <img src="./t2.png" alt="" />
+              <h3>Maze</h3>
+              <p>Product research</p>
+            </div>
+            <div class="toolSectionChild">
+              <img src="./t3.png" alt="" />
+              <h3>Spline</h3>
+              <p>3D design</p>
+            </div>
+            <div class="toolSectionChild">
+              <img src="./t4.png" alt="" />
+              <h3>Zeplin</h3>
+              <p>Design workspace</p>
+            </div>
+          </div>
+          <center>
+            <button class="button">Click To Show More Tools</button>
+          </center>
+        </div>
       </section>
-
-      <div class="clearfix"></div>
-    </div>
-
-    <!-- Links the TypeScript file that adds interactivity -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    </main>
 
     <script type="module" src="/src/main.ts"></script>
   </body>
