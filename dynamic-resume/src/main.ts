@@ -1,163 +1,223 @@
-interface ResumeData {
-  name: string;
-  email: string;
-  education: Education[];
-  experience: Experience[];
-  skills: string;
-}
-
 interface Education {
-  degree: string;
-  institution: string;
-  gradYear: number;
+  degree: FormDataEntryValue | null;
+  university: FormDataEntryValue | null;
+  graduationYear: FormDataEntryValue | null;
 }
 
-interface Experience {
-  jobTitle: string;
-  company: string;
-  years: number;
+interface WorkExperience {
+  jobTitle: FormDataEntryValue | null;
+  company: FormDataEntryValue | null;
+  workDates: FormDataEntryValue | null;
+  jobDescription: FormDataEntryValue | null;
 }
 
-let educationEntries: Education[] = [];
-let experienceEntries: Experience[] = [];
-
-// Adding education inputs
-const educationSection = document.getElementById("education-section")!;
-const addEducationBtn = document.getElementById("add-education-btn")!;
-addEducationBtn.addEventListener("click", addEducationInput);
-
-function addEducationInput(): void {
-  const educationDiv = document.createElement("div");
-  educationDiv.classList.add("education-entry");
-  educationDiv.innerHTML = `
-    <label for="degree">Degree:</label>
-    <input type="text" class="degree" placeholder="B.Sc. Computer Science" required>
-    <label for="institution">Institution:</label>
-    <input type="text" class="institution" placeholder="Harvard University" required>
-    <label for="gradYear">Graduation Year:</label>
-    <input type="number" class="gradYear" placeholder="2020" required>
-  `;
-  educationSection.appendChild(educationDiv);
+interface ResumeData {
+  name: FormDataEntryValue | null;
+  email: FormDataEntryValue | null;
+  phone: FormDataEntryValue | null;
+  description: FormDataEntryValue | null;
+  education: Education[];
+  workExperiences: WorkExperience[];
+  skills: string[];
+  linkedin: FormDataEntryValue | null;
+  github: FormDataEntryValue | null;
+  portfolio: FormDataEntryValue | null;
 }
 
-// Adding work experience inputs
-const experienceSection = document.getElementById("experience-section")!;
-const addExperienceBtn = document.getElementById("add-experience-btn")!;
-addExperienceBtn.addEventListener("click", addExperienceInput);
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("resumeForm") as HTMLFormElement | null;
+  const addEducationButton = document.getElementById(
+    "addEducation"
+  ) as HTMLButtonElement | null;
+  const addWorkExperienceButton = document.getElementById(
+    "addWorkExperience"
+  ) as HTMLButtonElement | null;
+  const educationSection = document.getElementById(
+    "educationSection"
+  ) as HTMLDivElement | null;
+  const workExperienceSection = document.getElementById(
+    "workExperienceSection"
+  ) as HTMLDivElement | null;
+  const overlay = document.getElementById("overlay") as HTMLDivElement | null;
+  const closePopupButton = document.getElementById(
+    "closePopup"
+  ) as HTMLButtonElement | null;
 
-function addExperienceInput(): void {
-  const experienceDiv = document.createElement("div");
-  experienceDiv.classList.add("experience-entry");
-  experienceDiv.innerHTML = `
-    <label for="jobTitle">Job Title:</label>
-    <input type="text" class="jobTitle" placeholder="Software Engineer" required>
-    <label for="company">Company:</label>
-    <input type="text" class="company" placeholder="Tech Corp" required>
-    <label for="years">Years:</label>
-    <input type="number" class="years" placeholder="2" required>
-  `;
-  experienceSection.appendChild(experienceDiv);
-}
+  const addEducation = () => {
+    if (!educationSection) return;
 
-document
-  .getElementById("resume-form")!
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
+    const education = document.createElement("div");
+    education.className = "education";
+    education.innerHTML = `
+      <input type="text" name="degree[]" placeholder="Degree" required>
+      <input type="text" name="university[]" placeholder="University" required>
+      <input type="text" name="graduationYear[]" placeholder="Graduation Year" required>
+    `;
+    educationSection.appendChild(education);
+  };
 
-    // Collect education data
-    const educationElements = document.querySelectorAll(".education-entry");
-    educationEntries = Array.from(educationElements).map((element) => {
-      const degree = (element.querySelector(".degree") as HTMLInputElement)
-        .value;
-      const institution = (
-        element.querySelector(".institution") as HTMLInputElement
-      ).value;
-      const gradYear = Number(
-        (element.querySelector(".gradYear") as HTMLInputElement).value
-      );
-      return { degree, institution, gradYear };
-    });
+  const addWorkExperience = () => {
+    if (!workExperienceSection) return;
 
-    // Collect work experience data
-    const experienceElements = document.querySelectorAll(".experience-entry");
-    experienceEntries = Array.from(experienceElements).map((element) => {
-      const jobTitle = (element.querySelector(".jobTitle") as HTMLInputElement)
-        .value;
-      const company = (element.querySelector(".company") as HTMLInputElement)
-        .value;
-      const years = Number(
-        (element.querySelector(".years") as HTMLInputElement).value
-      );
-      return { jobTitle, company, years };
-    });
+    const workExperience = document.createElement("div");
+    workExperience.className = "work-experience";
+    workExperience.innerHTML = `
+      <input type="text" name="jobTitle[]" placeholder="Job Title" required>
+      <input type="text" name="company[]" placeholder="Company" required>
+      <input type="text" name="workDates[]" placeholder="Work Dates" required>
+      <textarea name="jobDescription[]" placeholder="Job Description" required></textarea>
+    `;
+    workExperienceSection.appendChild(workExperience);
+  };
 
-    const resumeData: ResumeData = {
-      name: (document.getElementById("name") as HTMLInputElement).value,
-      email: (document.getElementById("email") as HTMLInputElement).value,
-      education: educationEntries,
-      experience: experienceEntries,
-      skills: (document.getElementById("skills") as HTMLInputElement).value,
+  const gatherFormData = (): ResumeData | null => {
+    if (!form) return null;
+
+    const formData = new FormData(form);
+    const education: Education[] = [];
+    const workExperiences: WorkExperience[] = [];
+    const degrees = formData.getAll("degree[]");
+    const universities = formData.getAll("university[]");
+    const graduationYears = formData.getAll("graduationYear[]");
+    const jobTitles = formData.getAll("jobTitle[]");
+    const companies = formData.getAll("company[]");
+    const workDates = formData.getAll("workDates[]");
+    const jobDescriptions = formData.getAll("jobDescription[]");
+
+    for (let i = 0; i < degrees.length; i++) {
+      education.push({
+        degree: degrees[i],
+        university: universities[i],
+        graduationYear: graduationYears[i],
+      });
+    }
+
+    for (let i = 0; i < jobTitles.length; i++) {
+      workExperiences.push({
+        jobTitle: jobTitles[i],
+        company: companies[i],
+        workDates: workDates[i],
+        jobDescription: jobDescriptions[i],
+      });
+    }
+
+    return {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      description: formData.get("description"),
+      education,
+      workExperiences,
+      skills:
+        (formData.get("skills") as string | null)
+          ?.split(",")
+          .map((skill) => skill.trim()) || [],
+      linkedin: formData.get("linkedin"),
+      github: formData.get("github"),
+      portfolio: formData.get("portfolio"),
     };
+  };
 
-    generateResume(resumeData);
+  const generateResume = (resumeData: ResumeData): string => {
+    return `
+        <div class="resume-container">
+            <div class="resume-left-column">
+                <div class="resume-header">
+                    <h1 class="resume-name">${resumeData.name || ""}</h1>
+                    <p class="resume-contact">${resumeData.email || ""} | ${
+      resumeData.phone || ""
+    }</p>
+                </div>
+                
+                <div class="resume-section">
+                    <h2>Skills</h2>
+                    <ul class="skills-list">
+                        ${resumeData.skills
+                          .map((skill) => `<li>${skill}</li>`)
+                          .join("")}
+                    </ul>
+                </div>
+                
+                <div class="resume-section">
+                    <h2>Social Media</h2>
+                    <ul class="social-media-list">
+                        ${
+                          resumeData.linkedin
+                            ? `<li><a href="${resumeData.linkedin}" target="_blank">LinkedIn</a></li>`
+                            : ""
+                        }
+                        ${
+                          resumeData.github
+                            ? `<li><a href="${resumeData.github}" target="_blank">GitHub</a></li>`
+                            : ""
+                        }
+                        ${
+                          resumeData.portfolio
+                            ? `<li><a href="${resumeData.portfolio}" target="_blank">Portfolio</a></li>`
+                            : ""
+                        }
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="resume-right-column">
+                <div class="resume-section">
+                    <h2>Professional Summary</h2>
+                    <p>${resumeData.description || ""}</p>
+                </div>
+
+                <div class="resume-section">
+                    <h2>Education</h2>
+                    ${resumeData.education
+                      .map(
+                        (edu) => `
+                            <div class="education-item">
+                                <h3>${edu.degree || ""}</h3>
+                                <p>${edu.university || ""}</p>
+                                <p>${edu.graduationYear || ""}</p>
+                            </div>
+                        `
+                      )
+                      .join("")}
+                </div>
+                
+                <div class="resume-section">
+                    <h2>Work Experience</h2>
+                    ${resumeData.workExperiences
+                      .map(
+                        (exp) => `
+                            <div class="work-experience-item">
+                                <h3>${exp.jobTitle || ""}</h3>
+                                <p class="company-name">${exp.company || ""}</p>
+                                <p class="work-dates">${exp.workDates || ""}</p>
+                                <p class="job-description">${
+                                  exp.jobDescription || ""
+                                }</p>
+                            </div>
+                        `
+                      )
+                      .join("")}
+                </div>
+            </div>
+        </div>
+    `;
+  };
+
+  const handleSubmit = (e: Event) => {
+    e.preventDefault();
+    const resumeData = gatherFormData();
+    if (resumeData && document.getElementById("resumeContent")) {
+      const resumeContent = generateResume(resumeData);
+      (document.getElementById("resumeContent") as HTMLDivElement).innerHTML =
+        resumeContent;
+      if (overlay) overlay.style.display = "block";
+    }
+  };
+
+  form?.addEventListener("submit", handleSubmit);
+  addEducationButton?.addEventListener("click", addEducation);
+  addWorkExperienceButton?.addEventListener("click", addWorkExperience);
+  closePopupButton?.addEventListener("click", () => {
+    if (overlay) overlay.style.display = "none";
   });
-
-function generateResume(data: ResumeData): void {
-  const resumeOutput = document.getElementById("resume-output")!;
-  resumeOutput.innerHTML = `
-    <div class="resume-header">
-      <h3>${data.name}</h3>
-    <p>Email: ${data.email}</p>
-    </div>
-
-    <div class="resume-section">
-      <h4>Education</h4>
-      <ul>
-        ${
-          data.education.length > 0
-            ? data.education
-                .map(
-                  (edu) =>
-                    `<li class="education-entry">
-                     <div class="title">${edu.degree}</div>
-        <div class="school">${edu.institution}</div>
-        <div class="years">${edu.gradYear}</div>
-                    </li>`
-                )
-                .join("")
-            : "<li>No education details provided.</li>"
-        }
-      </ul>
-    </div>
-
-    <div class="resume-section">
-      <h4>Work Experience</h4>
-      <ul>
-        ${
-          data.experience.length > 0
-            ? data.experience
-                .map(
-                  (exp) =>
-                    `<li class="experience-entry">
-                    <div class="title">${exp.jobTitle}</div>
-        <div class="company">${exp.company}</div>
-        <div class="years">${exp.years}</div>
-                    </li>`
-                )
-                .join("")
-            : "<li>No work experience provided.</li>"
-        }
-      </ul>
-    </div>
-
-    <div class="resume-section">
-      <h4>Skills</h4>
-      <div class="skills">
-      <span class="skill-tag">${data.skills}</span>
-    </div>
-    <div class="resume-footer">
-    <p>Generated by Dynamic Resume Builder</p>
-  </div>
-    </div>
-  `;
-}
+});

@@ -3,60 +3,139 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dynamic Resume Builder</title>
+    <title>Professional Resume Builder</title>
     <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
     <div class="container">
-      <h1>Dynamic Resume Builder</h1>
-      <div class="form-container">
-        <form id="resume-form">
+      <h1>Professional Resume Builder</h1>
+      <form id="resumeForm">
+        <section>
           <h2>Personal Information</h2>
-          <label for="name">Name:</label>
-          <input type="text" id="name" placeholder="John Doe" required />
-          <label for="email">Email:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Full Name"
+            required
+          />
           <input
             type="email"
             id="email"
-            placeholder="john@example.com"
+            name="email"
+            placeholder="Email"
             required
           />
-
-          <h2>Education</h2>
-          <div id="education-section">
-            <!-- Education inputs will be appended here -->
-          </div>
-          <button id="add-education-btn" type="button" class="add-btn">
-            Add Education
-          </button>
-
-          <h2>Work Experience</h2>
-          <div id="experience-section">
-            <!-- Work experience inputs will be appended here -->
-          </div>
-          <button id="add-experience-btn" type="button" class="add-btn">
-            Add Work Experience
-          </button>
-
-          <h2>Skills</h2>
-          <label for="skills">Skills (Comma-separated):</label>
           <input
-            type="text"
-            id="skills"
-            placeholder="JavaScript, TypeScript, React"
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="Phone"
             required
           />
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Professional Summary"
+            required
+          ></textarea>
+        </section>
 
-          <button type="submit" id="generate-btn" class="submit-btn">
-            Generate Resume
-          </button>
-        </form>
-      </div>
-      <div class="resume-container">
-        <h2>Your Resume</h2>
-        <div id="resume-output" class="resume-output"></div>
+        <section id="educationSection">
+          <h2>Education</h2>
+          <div class="education">
+            <input type="text" name="degree[]" placeholder="Degree" required />
+            <input
+              type="text"
+              name="university[]"
+              placeholder="University"
+              required
+            />
+            <input
+              type="text"
+              name="graduationYear[]"
+              placeholder="Graduation Year"
+              required
+            />
+          </div>
+        </section>
+        <button type="button" id="addEducation">Add Education</button>
+
+        <section id="workExperienceSection">
+          <h2>Work Experience</h2>
+          <div class="work-experience">
+            <input
+              type="text"
+              name="jobTitle[]"
+              placeholder="Job Title"
+              required
+            />
+            <input
+              type="text"
+              name="company[]"
+              placeholder="Company"
+              required
+            />
+            <input
+              type="text"
+              name="workDates[]"
+              placeholder="Work Dates"
+              required
+            />
+            <textarea
+              name="jobDescription[]"
+              placeholder="Job Description"
+              required
+            ></textarea>
+          </div>
+        </section>
+        <button type="button" id="addWorkExperience">
+          Add Work Experience
+        </button>
+
+        <section>
+          <h2>Skills</h2>
+          <textarea
+            id="skills"
+            name="skills"
+            placeholder="Skills (comma-separated)"
+            required
+          ></textarea>
+        </section>
+
+        <section>
+          <h2>Social Media</h2>
+          <input
+            type="url"
+            id="linkedin"
+            name="linkedin"
+            placeholder="LinkedIn URL"
+          />
+          <input
+            type="url"
+            id="github"
+            name="github"
+            placeholder="GitHub URL"
+          />
+          <input
+            type="url"
+            id="portfolio"
+            name="portfolio"
+            placeholder="Portfolio URL"
+          />
+        </section>
+
+        <button type="submit" id="generateResume">Generate Resume</button>
+      </form>
+    </div>
+
+    <div id="overlay" class="overlay">
+      <div id="resumePopup" class="resume-popup">
+        <div id="resumeContent" class="resume-content"></div>
+        <button id="closePopup">Close</button>
       </div>
     </div>
-    <script src="./src/main.ts" type="module"></script>
+
+    <script src="./src/main.ts"></script>
   </body>
 </html>
