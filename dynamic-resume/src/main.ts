@@ -70,51 +70,109 @@ document.addEventListener("DOMContentLoaded", () => {
     workExperienceSection.appendChild(workExperience);
   };
 
+  // const gatherFormData = (): ResumeData | null => {
+  //   if (!form) return null;
+
+  //   const formData = new FormData(form);
+  //   const education: Education[] = [];
+  //   const workExperiences: WorkExperience[] = [];
+  //   const degrees = formData.getAll("degree[]");
+  //   const universities = formData.getAll("university[]");
+  //   const graduationYears = formData.getAll("graduationYear[]");
+  //   const jobTitles = formData.getAll("jobTitle[]");
+  //   const companies = formData.getAll("company[]");
+  //   const workDates = formData.getAll("workDates[]");
+  //   const jobDescriptions = formData.getAll("jobDescription[]");
+
+  //   for (let i = 0; i < degrees.length; i++) {
+  //     education.push({
+  //       degree: degrees[i],
+  //       university: universities[i],
+  //       graduationYear: graduationYears[i],
+  //     });
+  //   }
+
+  //   for (let i = 0; i < jobTitles.length; i++) {
+  //     workExperiences.push({
+  //       jobTitle: jobTitles[i],
+  //       company: companies[i],
+  //       workDates: workDates[i],
+  //       jobDescription: jobDescriptions[i],
+  //     });
+  //   }
+
+  //   return {
+  //     name: formData.get("name"),
+  //     email: formData.get("email"),
+  //     phone: formData.get("phone"),
+  //     description: formData.get("description"),
+  //     education,
+  //     workExperiences,
+  //     skills:
+  //       (formData.get("skills") as string | null)
+  //         ?.split(",")
+  //         .map((skill) => skill.trim()) || [],
+  //     linkedin: formData.get("linkedin"),
+  //     github: formData.get("github"),
+  //     portfolio: formData.get("portfolio"),
+  //   };
+  // };
+
   const gatherFormData = (): ResumeData | null => {
     if (!form) return null;
 
     const formData = new FormData(form);
     const education: Education[] = [];
     const workExperiences: WorkExperience[] = [];
-    const degrees = formData.getAll("degree[]");
-    const universities = formData.getAll("university[]");
-    const graduationYears = formData.getAll("graduationYear[]");
-    const jobTitles = formData.getAll("jobTitle[]");
-    const companies = formData.getAll("company[]");
-    const workDates = formData.getAll("workDates[]");
-    const jobDescriptions = formData.getAll("jobDescription[]");
+
+    // Gather education data
+    const degrees = formData.getAll("degree[]") as FormDataEntryValue[];
+    const universities = formData.getAll(
+      "university[]"
+    ) as FormDataEntryValue[];
+    const graduationYears = formData.getAll(
+      "graduationYear[]"
+    ) as FormDataEntryValue[];
 
     for (let i = 0; i < degrees.length; i++) {
       education.push({
-        degree: degrees[i],
-        university: universities[i],
-        graduationYear: graduationYears[i],
+        degree: degrees[i] || "",
+        university: universities[i] || "",
+        graduationYear: graduationYears[i] || "",
       });
     }
 
+    // Gather work experience data
+    const jobTitles = formData.getAll("jobTitle[]") as FormDataEntryValue[];
+    const companies = formData.getAll("company[]") as FormDataEntryValue[];
+    const workDates = formData.getAll("workDates[]") as FormDataEntryValue[];
+    const jobDescriptions = formData.getAll(
+      "jobDescription[]"
+    ) as FormDataEntryValue[];
+
     for (let i = 0; i < jobTitles.length; i++) {
       workExperiences.push({
-        jobTitle: jobTitles[i],
-        company: companies[i],
-        workDates: workDates[i],
-        jobDescription: jobDescriptions[i],
+        jobTitle: jobTitles[i] || "",
+        company: companies[i] || "",
+        workDates: workDates[i] || "",
+        jobDescription: jobDescriptions[i] || "",
       });
     }
 
     return {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      phone: formData.get("phone"),
-      description: formData.get("description"),
+      name: formData.get("name") || "",
+      email: formData.get("email") || "",
+      phone: formData.get("phone") || "",
+      description: formData.get("description") || "",
       education,
       workExperiences,
       skills:
-        (formData.get("skills") as string | null)
+        (formData.get("skills") as string)
           ?.split(",")
           .map((skill) => skill.trim()) || [],
-      linkedin: formData.get("linkedin"),
-      github: formData.get("github"),
-      portfolio: formData.get("portfolio"),
+      linkedin: formData.get("linkedin") || "",
+      github: formData.get("github") || "",
+      portfolio: formData.get("portfolio") || "",
     };
   };
 
