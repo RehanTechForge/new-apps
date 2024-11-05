@@ -4,10 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Professional Resume Builder</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
-    <div class="container">
+    <!-- <div class="container">
       <h1>Professional Resume Builder</h1>
       <form id="resumeForm">
         <section>
@@ -126,6 +133,105 @@
         </section>
 
         <button type="submit" id="generateResume">Generate Resume</button>
+      </form>
+    </div> -->
+
+    <div class="container">
+      <h1>Professional Resume Builder</h1>
+      <form id="resumeForm">
+        <section class="form-section">
+          <h2>Personal Information</h2>
+          <div class="input-group">
+            <input type="text" id="name" name="name" required />
+            <label for="name">Full Name</label>
+          </div>
+          <div class="input-group">
+            <input type="email" id="email" name="email" required />
+            <label for="email">Email</label>
+          </div>
+          <div class="input-group">
+            <input type="tel" id="phone" name="phone" required />
+            <label for="phone">Phone</label>
+          </div>
+          <div class="input-group">
+            <textarea id="description" name="description" required></textarea>
+            <label for="description">Professional Summary</label>
+          </div>
+        </section>
+
+        <section id="educationSection" class="form-section">
+          <h2>Education</h2>
+          <div class="education">
+            <div class="input-group">
+              <input type="text" name="degree[]" required />
+              <label>Degree</label>
+            </div>
+            <div class="input-group">
+              <input type="text" name="university[]" required />
+              <label>University</label>
+            </div>
+            <div class="input-group">
+              <input type="text" name="graduationYear[]" required />
+              <label>Graduation Year</label>
+            </div>
+          </div>
+        </section>
+        <button type="button" id="addEducation" class="btn-secondary">
+          Add Education
+        </button>
+
+        <section id="workExperienceSection" class="form-section">
+          <h2>Work Experience</h2>
+          <div class="work-experience">
+            <div class="input-group">
+              <input type="text" name="jobTitle[]" required />
+              <label>Job Title</label>
+            </div>
+            <div class="input-group">
+              <input type="text" name="company[]" required />
+              <label>Company</label>
+            </div>
+            <div class="input-group">
+              <input type="text" name="workDates[]" required />
+              <label>Work Dates</label>
+            </div>
+            <div class="input-group">
+              <textarea name="jobDescription[]" required></textarea>
+              <label>Job Description</label>
+            </div>
+          </div>
+        </section>
+        <button type="button" id="addWorkExperience" class="btn-secondary">
+          Add Work Experience
+        </button>
+
+        <section class="form-section">
+          <h2>Skills</h2>
+          <div class="input-group">
+            <textarea id="skills" name="skills" required></textarea>
+            <label for="skills">Skills (comma-separated)</label>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2>Social Media</h2>
+          <div class="input-group">
+            <input type="url" id="linkedin" name="linkedin" />
+            <label for="linkedin">LinkedIn URL</label>
+          </div>
+          <div class="input-group">
+            <input type="url" id="github" name="github" />
+            <label for="github">GitHub URL</label>
+          </div>
+          <div class="input-group">
+            <input type="url" id="portfolio" name="portfolio" />
+            <label for="portfolio">Portfolio URL</label>
+          </div>
+        </section>
+
+        <button type="submit" id="generateResume" class="btn-primary">
+          Generate Resume
+        </button>
       </form>
     </div>
 

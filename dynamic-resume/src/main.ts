@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 
                 <div class="resume-section">
-                    <h2>Skills</h2>
+                    <h2><i class="fa-solid fa-code"></i> Skills</h2>
                     <ul class="skills-list">
                         ${resumeData.skills
                           .map((skill) => `<li>${skill}</li>`)
@@ -197,21 +197,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 
                 <div class="resume-section">
-                    <h2>Social Media</h2>
+                    <h2><i class="fa-solid fa-share-alt"></i> Social Media</h2>
                     <ul class="social-media-list">
                         ${
                           resumeData.linkedin
-                            ? `<li><a href="${resumeData.linkedin}" target="_blank">LinkedIn</a></li>`
+                            ? `<li><span class="social-icon"><i class="fa-brands fa-linkedin-in"></i></span><a href="${resumeData.linkedin}" target="_blank">LinkedIn</a></li>`
                             : ""
                         }
                         ${
                           resumeData.github
-                            ? `<li><a href="${resumeData.github}" target="_blank">GitHub</a></li>`
+                            ? `<li><span class="social-icon"><i class="fa-brands fa-github"></i></span><a href="${resumeData.github}" target="_blank">GitHub</a></li>`
                             : ""
                         }
                         ${
                           resumeData.portfolio
-                            ? `<li><a href="${resumeData.portfolio}" target="_blank">Portfolio</a></li>`
+                            ? `<li><span class="social-icon"><i class="fa-regular fa-address-card"></i></span><a href="${resumeData.portfolio}" target="_blank">Portfolio</a></li>`
                             : ""
                         }
                     </ul>
@@ -220,39 +220,39 @@ document.addEventListener("DOMContentLoaded", () => {
             
             <div class="resume-right-column">
                 <div class="resume-section">
-                    <h2>Professional Summary</h2>
+                    <h2><i class="fa-solid fa-user-tie"></i> Professional Summary</h2>
                     <p>${resumeData.description || ""}</p>
                 </div>
 
                 <div class="resume-section">
-                    <h2>Education</h2>
+                    <h2><i class="fa-solid fa-graduation-cap"></i> Education</h2>
                     ${resumeData.education
                       .map(
                         (edu) => `
-                            <div class="education-item">
-                                <h3>${edu.degree || ""}</h3>
-                                <p>${edu.university || ""}</p>
-                                <p>${edu.graduationYear || ""}</p>
-                            </div>
-                        `
+                        <div class="education-item">
+                            <h3>${edu.degree || ""}</h3>
+                            <p>${edu.university || ""}</p>
+                            <p>${edu.graduationYear || ""}</p>
+                        </div>
+                    `
                       )
                       .join("")}
                 </div>
                 
                 <div class="resume-section">
-                    <h2>Work Experience</h2>
+                    <h2><i class="fa-solid fa-briefcase"></i> Work Experience</h2>
                     ${resumeData.workExperiences
                       .map(
                         (exp) => `
-                            <div class="work-experience-item">
-                                <h3>${exp.jobTitle || ""}</h3>
-                                <p class="company-name">${exp.company || ""}</p>
-                                <p class="work-dates">${exp.workDates || ""}</p>
-                                <p class="job-description">${
-                                  exp.jobDescription || ""
-                                }</p>
-                            </div>
-                        `
+                        <div class="work-experience-item">
+                            <h3>${exp.jobTitle || ""}</h3>
+                            <p class="company-name">${exp.company || ""}</p>
+                            <p class="work-dates">${exp.workDates || ""}</p>
+                            <p class="job-description">${
+                              exp.jobDescription || ""
+                            }</p>
+                        </div>
+                    `
                       )
                       .join("")}
                 </div>
