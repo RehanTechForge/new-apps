@@ -1,304 +1,444 @@
-/* Background GIF Styling */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --background-color: #ecf0f1;
+    --text-color: #333;
+    --border-color: #bdc3c7;
+    --input-bg: #f9f9f9;
+    --input-focus-bg: #fff;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 body {
-  background: url("../giphy.webp") no-repeat center center fixed;
-  background-size: cover;
-  color: #333;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
-/* Keyframes for animations */
-@keyframes inputFocus {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.05);
-  }
-}
-
-@keyframes typewriter {
-  from {
-    width: 0;
-  }
-  to {
-    width: 92%;
-  }
-}
-
-@keyframes blinkCursor {
-  0% {
-    border-right: 2px solid transparent;
-  }
-  100% {
-    border-right: 2px solid #007bff;
-  }
-}
-
-@keyframes slideInFromLeft {
-  from {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideInFromRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideInFromTop {
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideInFromBottom {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Body and Container Styling */
 .container {
-  max-width: 800px;
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0.4);
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(234, 206, 206, 0.1);
-  border-radius: 10px;
-  transition: transform 0.3s linear;
-  cursor: pointer;
-}
-
-.container:hover {
-  transform: scaleX(1.1);
-  -webkit-transform: scaleX(1.1);
-  -moz-transform: scaleX(1.1);
-  -ms-transform: scaleX(1.1);
-  -o-transform: scaleX(1.1);
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
 }
 
 h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
-  animation: slideInFromTop 1.5s ease-out;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
 }
 
 h2 {
-  margin-top: 20px;
-  color: #555;
-  font-size: 1.5rem;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 10px;
-  animation: slideInFromTop 2s ease-out;
+    color: var(--secondary-color);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 0.5rem;
 }
 
-/* Text Color and Background Styling */
-.container h1,
-.container h2,
-.container p,
-.container input,
-.container button {
-  color: #000;
-  background-color: transparent;
+.form-section {
+    margin-bottom: 2rem;
 }
 
-.form-container {
-  margin-bottom: 20px;
-  animation: slideInFromLeft 1s ease-out;
+.input-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: var(--input-bg);
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background-color: var(--input-focus-bg);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
 }
 
 label {
-  display: block;
-  margin: 10px 0 5px;
-  color: #555;
+    position: absolute;
+    left: 0.75rem;
+    top: 0.75rem;
+    font-size: 1rem;
+    color: #777;
+    transition: all 0.3s ease;
+    pointer-events: none;
 }
 
-/* Input Styling */
-input {
-  width: 95%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1rem;
-  background-color: #f9f9f9;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
-  outline: 2px solid transparent;
-  outline-offset: 2px;
+input:focus ~ label,
+input:not(:placeholder-shown) ~ label,
+textarea:focus ~ label,
+textarea:not(:placeholder-shown) ~ label {
+    top: -0.5rem;
+    left: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--accent-color);
+    background-color: #fff;
+    padding: 0 0.25rem;
 }
 
-input:focus {
-  outline: 2px solid transparent;
-  border-color: #007bff;
-  background-color: #fff;
-  animation: inputFocus 0.3s ease-in-out;
+.btn-primary, .btn-secondary {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
 }
 
-input:focus:valid {
-  border-color: #28a745;
-  outline-color: #28a745;
+.btn-primary {
+    background-color: var(--accent-color);
+    color: #fff;
 }
 
-input:focus:invalid {
-  border-color: #dc3545;
-  outline-color: #dc3545;
+.btn-primary:hover {
+    background-color: #2980b9;
 }
 
-/* Button Styling */
-.add-btn,
-.submit-btn {
-  display: block;
-  background-color: #007bff;
-  color: white;
-  padding: 10px 15px;
-  margin: 15px 0;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  animation: pulse 2s infinite;
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: #fff;
+    margin-bottom: 1rem;
 }
 
-.add-btn:hover,
-.submit-btn:hover {
-  background-color: #0056b3;
-  transform: scale(1.1);
+.btn-secondary:hover {
+    background-color: #2c3e50;
 }
 
-/* Resume Container Styling */
-.resume-container {
-  margin-top: 30px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-  animation: slideInFromRight 1s ease-out;
+.education, .work-experience {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.resume-container:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+.education > input, .work-experience > input {
+    margin: 10px 0px;
 }
 
-/* Resume Output Styling */
-.resume-output {
-  background-color: #fefefe;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 25px;
-  min-height: 250px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  animation: typewriter 2s steps(30) 1 normal both,
-    blinkCursor 1s step-end infinite;
-  -webkit-animation: typewriter 2s steps(30) 1 normal both,
-    blinkCursor 1s step-end infinite;
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
 }
 
-.resume-output:hover {
-  background-color: #fff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+/* Overlay */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    backdrop-filter: blur(4px); /* Adds a subtle blur to the background */
+    transition: opacity 0.3s ease; /* Smooth transition */
 }
 
-.resume-output h3 {
-  font-size: 1.8rem;
-  color: #007bff;
-  margin-bottom: 15px;
+/* Resume Popup */
+.resume-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    max-width: 1100px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: fadeIn 0.4s ease-out; /* Add a fade-in effect */
 }
 
-.resume-output p {
-  margin: 5px 0;
-  font-size: 1rem;
-  color: #555;
+/* Popup Fade-In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -45%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
 }
 
-/* Resume Section Styling */
-.resume-section {
-  margin-top: 25px;
-  padding-top: 10px;
-  border-top: 1px solid #ddd;
+/* Content Styling */
+.resume-content {
+    margin-bottom: 1rem;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
 }
 
-.resume-section h4 {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 10px;
+/* Close Button Styling */
+#closePopup {
+    display: block;
+    margin: 1rem auto 0;
+    background-color: var(--accent-color);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#closePopup:hover {
+    background-color: darken(var(--accent-color), 10%);
+    color: black;
 }
 
-.resume-section ul {
-  list-style-type: none;
-  padding-left: 0;
+/* Editable Section Styling */
+.editable {
+    position: relative;
+    padding: 5px;
+    border: 1px dashed transparent;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+    color: black;
+}
+.editable:hover {
+    border-color: var(--accent-color);
+    cursor: pointer;
+    color: white;
+    background-color: rgba(255, 239, 239, 0.2); /* Subtle background on hover */
 }
 
-.resume-section li {
-  padding: 10px;
-  background-color: #f9f9f9;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, background-color 0.2s ease;
+/* Edit Button Styling */
+.edit-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 3px 7px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease;
+}
+.editable:hover .edit-button {
+    display: block;
+    opacity: 1;
+}
+.edit-button:hover {
+    background-color: darken(var(--accent-color), 10%);
+    color: black;
 }
 
-.resume-section li:hover {
-  transform: translateY(-2px);
-  background-color: #f0f0f0;
+/* Editing Mode Styling */
+.editing {
+    border: 1px solid var(--accent-color);
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.03); /* Subtle highlight when editing */
+}
+.editing input,
+.editing textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    transition: border-color 0.3s ease;
+}
+.editing input:focus,
+.editing textarea:focus {
+    border-color: var(--accent-color);
+    outline: none;
 }
 
-.resume-section li .title {
-  font-weight: bold;
-  color: #007bff;
-  font-size: 1.2rem;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .resume-popup {
+        max-width: 90%;
+        padding: 1.5rem;
+    }
+
+    .resume-content {
+        font-size: 0.9rem;
+    }
+}
+/* body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+} */
+
+/* General Styling */
+h1, h2 {
+    color: #333;
+    font-weight: bold;
 }
 
-.resume-section li .school,
-.resume-section li .company {
-  color: #555;
-  font-size: 1rem;
-  margin-top: 5px;
+h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
 }
 
-.resume-section li .years {
-  font-size: 0.9rem;
-  color: #888;
-  margin-top: 3px;
+h2 {
+    font-size: 1.5rem;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+    margin-top: 20px;
 }
 
-.resume-footer {
-  text-align: center;
-  margin-top: 30px;
-  font-size: 0.9rem;
-  color: #999;
-  border-top: 1px solid #ddd;
-  padding-top: 15px;
+/* Editable Section Styling */
+.editable {
+    position: relative;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
 }
 
-.resume-footer p {
-  margin: 0;
+.editable:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    color: black;
+}
+
+/* Edit Button Styling */
+.edit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: none;
+}
+
+.editable:hover .edit-button {
+    display: block;
+}
+
+/* Sidebar (Left) Styling */
+.left {
+    width: 20%;
+    background-color: #34495e;
+    color: #ecf0f1;
+    padding: 15px;
+    border-radius: 8px 0 0 8px;
+}
+
+.left h2 {
+    color: #ecf0f1;
+    border-bottom-color: #ecf0f1;
+}
+
+.left ul {
+    padding-left: 0;
+}
+
+.left ul li {
+    list-style: none;
+    padding: 8px 0;
+}
+
+/* Skills Styling */
+[data-field="skills"] ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex-direction: column;
+}
+
+[data-field="skills"] li {
+    background-color: #e1f5fe !important;
+    color: #0277bd;
+    padding: 5px 10px !important;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    list-style: square !important;
+    margin-left: 10px;
+    
+}
+
+/* Link Styling */
+a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #217dbb;
+}
+
+/* [data-field="socialMedia"] ul li{
+
+} */
+
+/* Main Layout */
+.main-resume {
+    display: flex;
+    width: 100%;
+    background: #ecf0f1;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.right {
+    width: 80%;
+    padding: 20px;
+    background-color: #f7f9fb;
+    border-radius: 0 8px 8px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-resume {
+        flex-direction: column;
+    }
+
+    .left, .right {
+        width: 100%;
+        border-radius: 0;
+    }
 }
