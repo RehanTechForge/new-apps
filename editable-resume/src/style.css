@@ -28,12 +28,8 @@ body {
     box-shadow: var(--box-shadow);
 }
 
-h1 {
-    color: var(--primary-color);
+.container > h1 {
     text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2.5rem;
-    font-weight: 700;
 }
 
 h2 {
@@ -56,7 +52,7 @@ h2 {
 }
 
 input, textarea {
-    width: 100%;
+    width: 95%;
     padding: 0.75rem;
     border: 1px solid var(--border-color);
     border-radius: 4px;
@@ -110,6 +106,7 @@ textarea:not(:placeholder-shown) ~ label {
     text-transform: uppercase;
     transition: all 0.3s ease;
     margin-top: 1rem;
+    background-color: var(--accent-color) !important;
 }
 
 .btn-primary {
@@ -118,7 +115,8 @@ textarea:not(:placeholder-shown) ~ label {
 }
 
 .btn-primary:hover {
-    background-color: #2980b9;
+    background-color: var(--primary-color) !important;
+    color: white !important;
 }
 
 .btn-secondary {
@@ -128,7 +126,7 @@ textarea:not(:placeholder-shown) ~ label {
 }
 
 .btn-secondary:hover {
-    background-color: #2c3e50;
+    background-color: var(--secondary-color) !important;
 }
 
 .education, .work-experience {
@@ -272,7 +270,7 @@ textarea:not(:placeholder-shown) ~ label {
 }
 .editing input,
 .editing textarea {
-    width: 100%;
+    width: 98%;
     padding: 8px;
     margin-bottom: 5px;
     border-radius: 3px;
@@ -313,7 +311,7 @@ h1, h2 {
 
 h1 {
     font-size: 2rem;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 h2 {
@@ -327,11 +325,9 @@ h2 {
 .editable {
     position: relative;
     padding: 10px;
-    background-color: #fff;
+    /* background-color: #fff; */
     border-radius: 5px;
     margin-bottom: 15px;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
 }
 
 .editable:hover {
@@ -360,8 +356,7 @@ h2 {
 
 /* Sidebar (Left) Styling */
 .left {
-    width: 20%;
-    background-color: #34495e;
+    background:linear-gradient(120deg,#1d1f36,#373e5b);
     color: #ecf0f1;
     padding: 15px;
     border-radius: 8px 0 0 8px;
@@ -381,7 +376,6 @@ h2 {
     padding: 8px 0;
 }
 
-/* Skills Styling */
 [data-field="skills"] ul {
     display: flex;
     flex-wrap: wrap;
@@ -390,16 +384,82 @@ h2 {
 }
 
 [data-field="skills"] li {
-    background-color: #e1f5fe !important;
-    color: #0277bd;
-    padding: 5px 10px !important;
+    color: white;
+    padding: 5px 0px !important;
     border-radius: 4px;
-    font-size: 0.9rem;
-    list-style: square !important;
-    margin-left: 10px;
     
 }
+[data-field="skills"] li > i {
+    padding: 10px 11px;
+    border-radius: 50%;
+    background: #55556e;
+    color: white;
+    font-size: 18px;
+    margin-right: 5px;
+}
+[data-field="skills"] > textarea {
+    width: 92% !important;
+}
+[data-field="description"],[data-field="education"],[data-field="workExperience"] {
+    background-color: transparent;
+    box-shadow: none;
+}
+[data-field="contact"] .contactMain {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    color: white;
+}
+[data-field="contact"] .contactMain > .contactFirstRow {
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: #55556e;
+    color: white;
+}
+[data-field="contact"] .contactMain > .contactSecondRow > span {
+    word-break: break-all;
+}
+[data-field="contact"] .contactMain > span {
+    word-break: break-all;
+    color: white;
+}
+[data-field="contact"] > input {
+    width: 92% !important;
+}
+[data-field="socialMedia"] > ul > li{
+    font-size: 15px;
+}
+[data-field="socialMedia"] > ul > li > i{
+    padding: 10px 11px;
+    border-radius: 50%;
+    background: #55556e;
+    color: white;
+    font-size: 18px;
+    margin-right: 5px;
+}
+[data-field="socialMedia"] > ul > li > a {
+    color: white !important;
+}
+[data-field="socialMedia"] > ul > li > a > i {
+    display: inline-block;
+    margin-right: 10px;
+    
+}
+[data-field="name"] > h1 {
+    color: white !important;
+    font-size: 28px;
 
+}
+[data-field="name"] > input {
+    width: 92%;
+} 
+[data-field="socialMedia"] > textarea{
+    width: 92% !important;
+}
+.phoneLabel,.emailLabel {
+    color: #62677d !important;
+    margin: 2px 0px;
+}
 /* Link Styling */
 a {
     color: #3498db;
@@ -410,10 +470,6 @@ a {
 a:hover {
     color: #217dbb;
 }
-
-/* [data-field="socialMedia"] ul li{
-
-} */
 
 /* Main Layout */
 .main-resume {
@@ -436,9 +492,126 @@ a:hover {
     .main-resume {
         flex-direction: column;
     }
-
-    .left, .right {
-        width: 100%;
-        border-radius: 0;
+    .left{
+        border-radius: 8px 8px 0px 0px !important;
     }
+
+    .right {
+        border-radius: 0;
+        width: 93.5% !important;
+    }
+}
+.education-section {
+  padding: 20px 0;
+  border-top: 2px solid #333;
+  font-family: Arial, sans-serif;
+}
+
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.section-title i {
+  margin-right: 10px;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.education-item {
+  padding: 10px;
+}
+
+.education-header {
+  display: flex;
+  align-items: baseline;
+  font-size: 1.1rem;padding: 0px 10px
+}
+
+.degree {
+  font-weight: 600;
+  color: #222;
+}
+
+.university {
+  color: #666;
+  margin-left: 8px;
+  font-size: 1rem;
+}
+
+.graduation-year {
+  font-size: 0.95rem;
+  color: #444;
+  margin-top: 4px;
+  margin-left: 4px;padding: 0px 10px
+}
+.work-experience-section {
+  padding: 20px 0;
+  border-top: 2px solid #333;
+  font-family: Arial, sans-serif;
+}
+
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.section-title i {
+  margin-right: 10px;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.work-item {
+  padding: 15px 10px;
+  transition: background-color 0.2s;
+}
+
+.work-item:hover {
+  background-color: #f9f9f9;
+}
+
+.work-header {
+  display: flex;
+  align-items: baseline;
+  font-size: 1.1rem;
+}
+
+.work-header > span:nth-child(2){
+    margin-left: 10px;
+    font-size: 22px !important;
+    color: #2c3e50 !important;
+}
+
+.job-title {
+  font-weight: 600;
+  color: #222;
+}
+
+.company {
+  color: #666;
+  margin-left: 8px;
+  font-size: 1rem;
+}
+
+.work-dates {
+  font-size: 0.95rem;
+  color: #444;
+  margin-top: 4px;
+  margin-left: 4px;
+}
+
+.job-description {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.4;
+  margin-top: 8px;
 }
