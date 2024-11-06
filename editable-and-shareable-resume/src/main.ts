@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     education: Education[];
     workExperiences: WorkExperience[];
     skills: string[];
+    languages: string[];
     linkedin: string;
     github: string;
     portfolio: string;
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     | "education"
     | "workExperience"
     | "skills"
+    | "languages"
     | "socialMedia";
 
   interface EditableField extends HTMLElement {
@@ -137,6 +139,9 @@ document.addEventListener("DOMContentLoaded", () => {
       skills: ((formData.get("skills") as string) || "")
         .split(",")
         .map((skill) => skill.trim()),
+      languages: ((formData.get("languages") as string) || "")
+        .split(",")
+        .map((language) => language.trim()),
       linkedin: (formData.get("linkedin") as string) || "",
       github: (formData.get("github") as string) || "",
       portfolio: (formData.get("portfolio") as string) || "",
@@ -144,6 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const generateResume = (resumeData: ResumeData): string => {
+    console.log(resumeData.languages);
     return `
       <section class="main-resume">
         <div class="left">
@@ -187,6 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <button class="edit-button">Edit</button>
             </div>
           </section>
+
           <section>
             <h2> <i class="fa-solid fa-share-nodes"></i> Social Media</h2>
             <div class="editable" data-field="socialMedia">
@@ -210,6 +217,22 @@ document.addEventListener("DOMContentLoaded", () => {
               <button class="edit-button">Edit</button>
             </div>
           </section>
+
+          <section>
+            <h2> <i class="fa-solid fa-code"></i> Languages</h2>
+            <div class="editable" data-field="languages">
+              <ul>
+                ${resumeData.languages
+                  .map(
+                    (language) =>
+                      `<li> <i class="fa-solid fa-language"></i> ${language}</li>`
+                  )
+                  .join("")}
+              </ul>
+              <button class="edit-button">Edit</button>
+            </div>
+          </section>
+
         </div>
         <div class="right">
           <section>
@@ -422,6 +445,12 @@ document.addEventListener("DOMContentLoaded", () => {
           .join(", ");
         content = `<textarea placeholder="Skills (comma-separated)">${skills}</textarea>`;
         break;
+      case "languages":
+        const languages = Array.from(field.querySelectorAll("li"))
+          .map((li) => li.textContent)
+          .join(", ");
+        content = `<textarea placeholder="Language (comma-separated)">${languages}</textarea>`;
+        break;
       case "socialMedia":
         const links = Array.from(field.querySelectorAll("a"))
           .map((a) => `${a.textContent}: ${a.getAttribute("href")}`)
@@ -522,6 +551,25 @@ document.addEventListener("DOMContentLoaded", () => {
               .map(
                 (skill) =>
                   `<li> <i class="fa-solid fa-check-double"></i> ${skill}</li>`
+              )
+              .join("")}
+          </ul>
+        `;
+        break;
+      case "languages":
+        console.log("Field", field);
+
+        const languages = (
+          (field.querySelector("textarea") as HTMLTextAreaElement).value || ""
+        )
+          .split(",")
+          .map((language) => language.trim());
+        newContent = `
+          <ul>
+            ${languages
+              .map(
+                (language) =>
+                  `<li> <i class="fa-solid fa-language"></i> ${language}</li>`
               )
               .join("")}
           </ul>

@@ -383,18 +383,18 @@ h2 {
     flex-direction: column;
 }
 
-[data-field="skills"] li {
+[data-field="skills"] li,[data-field="languages"] li {
     color: white;
     padding: 5px 0px !important;
     border-radius: 4px;
     
 }
-[data-field="skills"] li > i {
-    padding: 10px 11px;
+[data-field="skills"] li > i,[data-field="languages"] li > i {
+    padding: 10px 10px;
     border-radius: 50%;
     background: #55556e;
     color: white;
-    font-size: 18px;
+    font-size: 15px;
     margin-right: 5px;
 }
 [data-field="skills"] > textarea {
