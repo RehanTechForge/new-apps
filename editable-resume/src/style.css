@@ -401,10 +401,10 @@ h2 {
     width: 92% !important;
 }
 [data-field="description"] > p {
-    font-size: .9rem;
-    color: #555;
-    line-height: 1.4;
-    margin-top: 8px;
+    font-size: .9rem !important;
+    color: #555 !important;
+    line-height: 1.4 !important;
+    margin-top: 8px !important;
 }
 [data-field="description"],[data-field="education"],[data-field="workExperience"] {
     background-color: transparent;
