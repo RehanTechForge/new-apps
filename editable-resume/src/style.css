@@ -400,6 +400,12 @@ h2 {
 [data-field="skills"] > textarea {
     width: 92% !important;
 }
+[data-field="description"] > p {
+    font-size: .9rem;
+    color: #555;
+    line-height: 1.4;
+    margin-top: 8px;
+}
 [data-field="description"],[data-field="education"],[data-field="workExperience"] {
     background-color: transparent;
     box-shadow: none;
