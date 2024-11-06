@@ -1,50 +1,10 @@
-import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
+import { EditableField, FieldType } from "./types/types";
+import { addEducation, addWorkExperience } from "./resumeFormUtils";
+import { generateResume } from "./generateResume";
+import { gatherFormData } from "./ResumeDataCollector";
+import { downloadResume, shareResume } from "./resumeActions";
+import { generateUniqueUrl } from "./utils";
 document.addEventListener("DOMContentLoaded", () => {
-  interface Education {
-    degree: string;
-    university: string;
-    graduationYear: string;
-  }
-
-  interface WorkExperience {
-    jobTitle: string;
-    company: string;
-    workDates: string;
-    jobDescription: string;
-  }
-
-  interface ResumeData {
-    name: string;
-    email: string;
-    phone: string;
-    description: string;
-    education: Education[];
-    workExperiences: WorkExperience[];
-    skills: string[];
-    languages: string[];
-    linkedin: string;
-    github: string;
-    portfolio: string;
-  }
-
-  type FieldType =
-    | "name"
-    | "contact"
-    | "description"
-    | "education"
-    | "workExperience"
-    | "skills"
-    | "languages"
-    | "socialMedia";
-
-  interface EditableField extends HTMLElement {
-    dataset: {
-      field: FieldType;
-      index?: string;
-    };
-  }
-
   const form = document.getElementById("resumeForm") as HTMLFormElement;
   const addEducationButton = document.getElementById(
     "addEducation"
@@ -52,12 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addWorkExperienceButton = document.getElementById(
     "addWorkExperience"
   ) as HTMLButtonElement;
-  const educationSection = document.getElementById(
-    "educationSection"
-  ) as HTMLDivElement;
-  const workExperienceSection = document.getElementById(
-    "workExperienceSection"
-  ) as HTMLDivElement;
+
   const overlay = document.getElementById("overlay") as HTMLDivElement;
   const closePopupButton = document.getElementById(
     "closePopup"
@@ -65,236 +20,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const resumeContent = document.getElementById(
     "resumeContent"
   ) as HTMLDivElement;
+  const uniqueUrlSpan = document.getElementById("uniqueUrl") as HTMLSpanElement;
   const shareSection = document.getElementById(
     "shareSection"
   ) as HTMLDivElement;
-  const uniqueUrlSpan = document.getElementById("uniqueUrl") as HTMLSpanElement;
+
   const shareButton = document.getElementById(
     "shareButton"
   ) as HTMLButtonElement;
   const downloadButton = document.getElementById(
     "downloadButton"
   ) as HTMLButtonElement;
-
-  const addEducation = (): void => {
-    const education = document.createElement("div");
-    education.className = "education";
-    education.innerHTML = `
-      <input type="text" name="degree[]" placeholder="Degree" required>
-      <input type="text" name="university[]" placeholder="University" required>
-      <input type="text" name="graduationYear[]" placeholder="Graduation Year" required>
-    `;
-    educationSection.appendChild(education);
-  };
-
-  const addWorkExperience = (): void => {
-    const workExperience = document.createElement("div");
-    workExperience.className = "work-experience";
-    workExperience.innerHTML = `
-      <input type="text" name="jobTitle[]" placeholder="Job Title" required>
-      <input type="text" name="company[]" placeholder="Company" required>
-      <input type="text" name="workDates[]" placeholder="Work Dates" required>
-      <textarea name="jobDescription[]" placeholder="Job Description" required></textarea>
-    `;
-    workExperienceSection.appendChild(workExperience);
-  };
-
-  const gatherFormData = (): ResumeData => {
-    const formData = new FormData(form);
-    const education: Education[] = [];
-    const workExperiences: WorkExperience[] = [];
-
-    const degrees = formData.getAll("degree[]") as string[];
-    const universities = formData.getAll("university[]") as string[];
-    const graduationYears = formData.getAll("graduationYear[]") as string[];
-    const jobTitles = formData.getAll("jobTitle[]") as string[];
-    const companies = formData.getAll("company[]") as string[];
-    const workDates = formData.getAll("workDates[]") as string[];
-    const jobDescriptions = formData.getAll("jobDescription[]") as string[];
-
-    for (let i = 0; i < degrees.length; i++) {
-      education.push({
-        degree: degrees[i],
-        university: universities[i],
-        graduationYear: graduationYears[i],
-      });
-    }
-
-    for (let i = 0; i < jobTitles.length; i++) {
-      workExperiences.push({
-        jobTitle: jobTitles[i],
-        company: companies[i],
-        workDates: workDates[i],
-        jobDescription: jobDescriptions[i],
-      });
-    }
-
-    return {
-      name: (formData.get("name") as string) || "",
-      email: (formData.get("email") as string) || "",
-      phone: (formData.get("phone") as string) || "",
-      description: (formData.get("description") as string) || "",
-      education,
-      workExperiences,
-      skills: ((formData.get("skills") as string) || "")
-        .split(",")
-        .map((skill) => skill.trim()),
-      languages: ((formData.get("languages") as string) || "")
-        .split(",")
-        .map((language) => language.trim()),
-      linkedin: (formData.get("linkedin") as string) || "",
-      github: (formData.get("github") as string) || "",
-      portfolio: (formData.get("portfolio") as string) || "",
-    };
-  };
-
-  const generateResume = (resumeData: ResumeData): string => {
-    console.log(resumeData.languages);
-    return `
-      <section class="main-resume">
-        <div class="left">
-          <section class="editable" data-field="name">
-            <h1>${resumeData.name}</h1>
-            <button class="edit-button">Edit</button>
-          </section>
-          <section class="editable" data-field="contact">
-            <h2> <i class="fa-solid fa-address-book"></i> Contact</h2>
-            <div class="contactMain">
-              <div class="contactFirstRow">
-                <i class="fa-solid fa-envelope"></i>
-              </div>
-              <div class="contactSecondRow">
-                <p  class="emailLabel">Email</p>
-                <span>${resumeData.email}</span>
-              </div>
-            </div>
-            <div class="contactMain">
-              <div class="contactFirstRow">
-                <i class="fa-solid fa-phone"></i>
-              </div>
-              <div class="contactSecondRow">
-                <p  class="phoneLabel">Phone</p>
-                <span>${resumeData.phone}</span>
-              </div>
-            </div>
-            <button class="edit-button">Edit</button>
-          </section>
-          <section>
-            <h2> <i class="fa-solid fa-code"></i> Skills</h2>
-            <div class="editable" data-field="skills">
-              <ul>
-                ${resumeData.skills
-                  .map(
-                    (skill) =>
-                      `<li> <i class="fa-solid fa-check-double"></i> ${skill}</li>`
-                  )
-                  .join("")}
-              </ul>
-              <button class="edit-button">Edit</button>
-            </div>
-          </section>
-
-          <section>
-            <h2> <i class="fa-solid fa-share-nodes"></i> Social Media</h2>
-            <div class="editable" data-field="socialMedia">
-              <ul>
-                ${
-                  resumeData.linkedin
-                    ? `<li> <i class="fa-brands fa-linkedin-in"></i> <a href="${resumeData.linkedin}" target="_blank">  LinkedIn</a></li>`
-                    : ""
-                }
-                ${
-                  resumeData.github
-                    ? `<li> <i class="fa-brands fa-github"></i> <a href="${resumeData.github}" target="_blank">  GitHub</a></li>`
-                    : ""
-                }
-                ${
-                  resumeData.portfolio
-                    ? `<li> <i class="fa-regular fa-address-card"></i>  <a href="${resumeData.portfolio}" target="_blank">  Portfolio</a></li>`
-                    : ""
-                }
-              </ul>
-              <button class="edit-button">Edit</button>
-            </div>
-          </section>
-
-          <section>
-            <h2> <i class="fa-solid fa-code"></i> Languages</h2>
-            <div class="editable" data-field="languages">
-              <ul>
-                ${resumeData.languages
-                  .map(
-                    (language) =>
-                      `<li> <i class="fa-solid fa-language"></i> ${language}</li>`
-                  )
-                  .join("")}
-              </ul>
-              <button class="edit-button">Edit</button>
-            </div>
-          </section>
-
-        </div>
-        <div class="right">
-          <section>
-            <h2> <i class="fa-solid fa-user-tie"></i> Professional Summary</h2>
-            <div class="editable" data-field="description">
-              <p>${resumeData.description}</p>
-              <button class="edit-button">Edit</button>
-            </div>
-          </section>
-          
-         <section class="education-section">
-          <h2 class="section-title">
-            <i class="fa-solid fa-graduation-cap"></i> Education
-          </h2>
-          ${resumeData.education
-            .map(
-              (edu, index) => `
-              <div class="education-item editable" data-field="education" data-index="${index}">
-                <div class="education-header">
-                  <h3 class="degree">${edu.degree}</h3>
-                  <span class="university"> | ${edu.university}</span>
-                </div>
-                <p class="graduation-year">${edu.graduationYear}</p>
-                <button class="edit-button">Edit</button>
-              </div>
-            `
-            )
-            .join("")}
-        </section>
-
-
-          
-          <section class="work-experience-section">
-            <h2 class="section-title">
-              <i class="fa-solid fa-briefcase"></i> Work Experience
-            </h2>
-            ${resumeData.workExperiences
-              .map(
-                (exp, index) => `
-                <div class="work-item editable" data-field="workExperience" data-index="${index}">
-                  <div class="work-header">
-                    <h3 class="job-title">${exp.jobTitle}</h3>
-                    <span class="company">${exp.company}</span>
-                  </div>
-                  <p class="work-dates">${exp.workDates}</p>
-                  <p class="job-description">${exp.jobDescription}</p>
-                  <button class="edit-button">Edit</button>
-                </div>
-              `
-              )
-              .join("")}
-          </section>
-
-        </div>
-      </section>
-    `;
-  };
-
-  const generateUniqueUrl = (name: string): string => {
-    const username = name.toLowerCase().replace(/\s+/g, "-");
-    return `${window.location.origin}/${username}/resume`;
-  };
 
   const handleSubmit = (e: Event): void => {
     e.preventDefault();
@@ -307,42 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const uniqueUrl = generateUniqueUrl(resumeData.name);
     uniqueUrlSpan.textContent = uniqueUrl;
     shareSection.style.display = "block";
-  };
-
-  const shareResume = (): void => {
-    const uniqueUrl = uniqueUrlSpan.textContent;
-    if (!uniqueUrl) {
-      console.error("URL is missing.");
-      return;
-    }
-    if (navigator.share) {
-      navigator
-        .share({
-          title: `${gatherFormData().name}'s Resume`,
-          text: "Check out my resume!",
-          url: uniqueUrl,
-        })
-        .then(() => {
-          console.log("Thanks for sharing!");
-        })
-        .catch(console.error);
-    } else {
-      prompt("Copy this link to share your resume:", uniqueUrl);
-    }
-  };
-
-  const downloadResume = (): void => {
-    const doc = new jsPDF();
-
-    html2canvas(resumeContent).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const imgProps = doc.getImageProperties(imgData);
-      const pdfWidth = doc.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-      doc.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      doc.save(`${gatherFormData().name}_resume.pdf`);
-    });
   };
 
   const setupEditableFields = (): void => {
