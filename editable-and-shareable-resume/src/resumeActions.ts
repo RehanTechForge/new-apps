@@ -1,7 +1,8 @@
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { gatherFormData } from "./ResumeDataCollector";
-export const shareResume = (): void => {
+
+const shareResume = (): void => {
   const uniqueUrlSpan = document.getElementById("uniqueUrl") as HTMLSpanElement;
   const uniqueUrl = uniqueUrlSpan.textContent;
   if (!uniqueUrl) {
@@ -24,7 +25,7 @@ export const shareResume = (): void => {
   }
 };
 
-export const downloadResume = (): void => {
+const downloadResume = (): void => {
   const resumeContent = document.getElementById(
     "resumeContent"
   ) as HTMLDivElement;
@@ -40,3 +41,14 @@ export const downloadResume = (): void => {
     doc.save(`${gatherFormData().name}_resume.pdf`);
   });
 };
+export function setupResumeActions(): void {
+  const shareButton = document.getElementById(
+    "shareButton"
+  ) as HTMLButtonElement;
+  const downloadButton = document.getElementById(
+    "downloadButton"
+  ) as HTMLButtonElement;
+
+  shareButton.addEventListener("click", shareResume);
+  downloadButton.addEventListener("click", downloadResume);
+}
